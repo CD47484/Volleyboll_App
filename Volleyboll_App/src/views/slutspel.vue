@@ -34,7 +34,7 @@ export default {
               player2: { id: "4", name: "Deltagare 4", winner: false, points: 14 },
             },
             {
-              player1: { id: "5", name: "Deltagare 5 24", winner: false, points: 9 },
+              player1: { id: "5", name: "Deltagare 5 241419", winner: false, points: 9 },
               player2: { id: "8", name: "Deltagare 8", winner: true, points: 7 },
             },
             {
@@ -62,7 +62,7 @@ export default {
           ]
         },
         {
-          stage:" The finals",
+          stage:"Finals",
           games: [
             //last game
             {
@@ -203,22 +203,22 @@ document.addEventListener("DOMContentLoaded", function() {
 
 .stage-name:nth-child(1) {
   top: 90px;
-  left: 50px;
+  left: 70px;
 }
 
 .stage-name:nth-child(2) {
   top: 90px;
-  left: 205px;
+  left: 255px;
 }
 
 .stage-name:nth-child(3) {
   top: 90px;
-  left: 390px;
+  left: 460px;
 }
 
 .stage-name:nth-child(4) {
   top: 90px;
-  left: 550px;
+  left: 680px;
 }
 
 
@@ -283,7 +283,7 @@ document.addEventListener("DOMContentLoaded", function() {
   position: absolute; 
   top: 20% !important;
   bottom:30%!important;
-  left:2%;
+  left:10%;
   display: flex !important;
   flex-wrap: wrap;
   justify-content: center;
@@ -302,11 +302,11 @@ document.addEventListener("DOMContentLoaded", function() {
 }
 
 .vtb-item-players, .vtb-item-players .winner, .vtb-item-players .defeated, .popup-trigger {
-  width:8.1em;
+  width:10em;
 }
 
 .popup-trigger {
-  width: 6em; 
+  width: 7.5em; 
   overflow: hidden;
   white-space: nowrap;
   text-overflow: ellipsis;
