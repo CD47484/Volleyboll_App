@@ -1,3 +1,4 @@
+
 <script>
 // Importera vue-tournament-bracket
 import VueTournamentBracket from 'vue-tournament-bracket';
@@ -11,7 +12,8 @@ export default {
     return {
        // Data om turneringen för spelare/lag i bracketsen
       rounds: [
-      {
+        { 
+          stage:"Play-in",
           games: [
             //last game
             {
@@ -22,7 +24,8 @@ export default {
 
           ]
         },
-      {
+        {
+          stage:"Quarterfinal",
           games: [
             //fist game
             {
@@ -44,8 +47,9 @@ export default {
             }
           ]
         },  
-      {
-        //second game
+        {
+          //second game
+          stage:"Semifinal",
           games: [
             {
               player1: { id: "2", name: "Deltagare 2", winner: false, points: 1 },
@@ -58,6 +62,7 @@ export default {
           ]
         },
         {
+          stage:" The finals",
           games: [
             //last game
             {
@@ -68,8 +73,17 @@ export default {
         }
         
       ]
+    };
+  },
+  computed: {
+    formattedRounds() {
+      return this.rounds.map(round => {
+        return {
+          stage: round.stage,
+          games: round.games
+        };
+      });
     }
-    ;
   },
   methods: {
     getPlayerClass(player){
@@ -134,36 +148,80 @@ document.addEventListener("DOMContentLoaded", function() {
 });
 </script>
 
+
 <template>
-  <vue-tournament-bracket :rounds="rounds">
-    <template v-slot:player="{ player }">
-      <div class="popup-trigger" @click.stop="toggleDropdown(player)">
-        <span :class="getPlayerClass(player)">
-          {{ player.name }} <span class="points">{{ player.points }}</span>
-        </span>
+  <div>
+    <!-- Display the tournament bracket -->
+    <div class="stage-names">
+      <div v-for="(round, index) in formattedRounds" :key="index" class="stage-name">
+        {{ round.stage }}
       </div>
-      <div v-if="player.showDropdown" class="dropdown">
-        <p>{{ player.specialText }}</p>
-      </div>
-    </template>
-  </vue-tournament-bracket>
+    </div>
+    <vue-tournament-bracket :rounds="formattedRounds">
+      <!-- Template for displaying players and dropdowns -->
+      <template v-slot:player="{ player }">
+        <div class="popup-trigger" @click.stop="toggleDropdown(player)">
+          <span :class="getPlayerClass(player)">
+            {{ player.name }} <span class="points">{{ player.points }}</span>
+          </span>
+        </div>
+        <div v-if="player.showDropdown" class="dropdown">
+          <p>{{ player.specialText }}</p>
+        </div>
+      </template>
+    </vue-tournament-bracket>
 
-  <div class="phone-container">
-  <img class="phone-img" src="https://cdn-icons-png.freepik.com/512/68/68737.png" alt="turn the phone">
-  </div>
+    <!-- Other elements -->
+    <div class="phone-container">
+      <img class="phone-img" src="https://cdn-icons-png.freepik.com/512/68/68737.png" alt="turn the phone">
+    </div>
 
-  <div class="plus">
-    <img class="plus-img" src="../assets/plus.png">
+    <div class="plus">
+      <img class="plus-img" src="../assets/plus.png">
+    </div>
+    <div class="box">
+      <p class="boxtext">Most points: IT21</p>
+      <p class="boxtext">Best W/L: IT21</p>
+      <p class="boxtext">Price: Pizza</p>
+    </div>
   </div>
-  <div class="box">
-    <p class="boxtext">Most points: IT21</p>
-    <p class="boxtext">Best W/L: IT21</p>
-    <p class="boxtext">Price: Pizza</p>
-  </div>
-
 </template>
 
+
+
+
 <style>
+.stage-names {
+  position: relative;
+}
+
+.stage-name {
+  position: absolute;
+  font-weight: bold;
+}
+
+
+.stage-name:nth-child(1) {
+  top: 100px;
+  left: 50px;
+}
+
+.stage-name:nth-child(2) {
+  top: 100px;
+  left: 205px;
+}
+
+.stage-name:nth-child(3) {
+  top: 100px;
+  left: 390px;
+}
+
+.stage-name:nth-child(4) {
+  top: 100px;
+  left: 550px;
+}
+
+
 
 .points{
   position: absolute;
@@ -246,6 +304,13 @@ document.addEventListener("DOMContentLoaded", function() {
 
 .vtb-item-players, .vtb-item-players .winner, .vtb-item-players .defeated, .popup-trigger {
   width:8em;
+}
+
+.popup-trigger {
+  width: 6.2em; 
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
 }
 .vtb-item-players .winner {
   position: relative;

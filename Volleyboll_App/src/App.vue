@@ -99,6 +99,7 @@ top:20px;
 #nav {
   position: absolute;
   display: flex;
+  justify-content: space-between;
   left: 0%;
   right: 0%;
   top: 0%;
@@ -124,7 +125,6 @@ top:20px;
   position: relative;
   width: 50px;
   height: 43px;
-  left: 80%;
   background-color: transparent;
   border:none;
 }
