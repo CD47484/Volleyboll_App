@@ -39,8 +39,6 @@ export default {
       <div class="bronzeteam">MERK 40</div>
     </div>
     <button class="hamburger" @click="Nav_burgur"></button>   
-    <RouterLink to="/gruppspel">gruppspel</RouterLink>
-    <RouterLink to="/slutspel">slutspel</RouterLink>
   </nav>
 
   <main id="main">
@@ -101,6 +99,7 @@ top:20px;
 #nav {
   position: absolute;
   display: flex;
+  justify-content: space-between;
   left: 0%;
   right: 0%;
   top: 0%;
