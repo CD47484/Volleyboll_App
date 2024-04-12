@@ -1,0 +1,9 @@
+{
+    "volleybollApi": {
+      "endpoint": "https://volleyboll-dev.fly.dev/tournament/info",
+      "method": "GET",
+      "headers": {
+        "Content-Type": "application/json"
+      }
+    }
+}
