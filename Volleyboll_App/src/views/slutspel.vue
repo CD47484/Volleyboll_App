@@ -202,22 +202,22 @@ document.addEventListener("DOMContentLoaded", function() {
 
 
 .stage-name:nth-child(1) {
-  top: 100px;
+  top: 90px;
   left: 50px;
 }
 
 .stage-name:nth-child(2) {
-  top: 100px;
+  top: 90px;
   left: 205px;
 }
 
 .stage-name:nth-child(3) {
-  top: 100px;
+  top: 90px;
   left: 390px;
 }
 
 .stage-name:nth-child(4) {
-  top: 100px;
+  top: 90px;
   left: 550px;
 }
 
@@ -237,7 +237,6 @@ document.addEventListener("DOMContentLoaded", function() {
   position: absolute;
   display: inline-grid;
   background-color: black;
-  border-radius: 3px;
   top: 50%; 
   left: 90%;
   transform: translate(-50%, -50%);
@@ -303,11 +302,11 @@ document.addEventListener("DOMContentLoaded", function() {
 }
 
 .vtb-item-players, .vtb-item-players .winner, .vtb-item-players .defeated, .popup-trigger {
-  width:8em;
+  width:8.1em;
 }
 
 .popup-trigger {
-  width: 6.2em; 
+  width: 6em; 
   overflow: hidden;
   white-space: nowrap;
   text-overflow: ellipsis;
