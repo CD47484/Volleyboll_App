@@ -104,10 +104,12 @@ top:20px;
   right: 0%;
   top: 0%;
   height: 10%;
+  min-height: 60px;
   align-items: center;
   background-color: #124076;
 }
 #main {
+  z-index: -1;
   position: absolute;
   top: 10%;
   bottom: 0%;
