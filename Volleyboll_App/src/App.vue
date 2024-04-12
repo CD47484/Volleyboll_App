@@ -125,7 +125,6 @@ top:20px;
   position: relative;
   width: 50px;
   height: 43px;
-  left: 80%;
   background-color: transparent;
   border:none;
 }
