@@ -12,67 +12,153 @@ export default {
     return {
        // Data om turneringen för spelare/lag i bracketsen
       rounds: [
-        { 
-          stage:"Play-in",
-          games: [
-            //last game
-            {
-              // Datan inom bracketsen
-              player1: { id: "2", name: "Deltagare 2", winner: true, points: 10  },
-              player2: { id: "4", name: "Deltagare 4", winner: false, points: 1  },
-            },
-
-          ]
+  {
+    "stage": "Play-in",
+    "games": [
+      {
+        "player1": {
+          "id": "27",
+          "name": "Team 1",
+          "points": 15,
+          "winner": true
         },
-        {
-          stage:"Quarterfinal",
-          games: [
-            //fist game
-            {
-              // Datan inom bracketsen
-              player1: { id: "2", name: "Deltagare 2", winner: true, points: 3 },
-              player2: { id: "4", name: "Deltagare 4", winner: false, points: 14 },
-            },
-            {
-              player1: { id: "5", name: "Deltagare 5 241419", winner: false, points: 9 },
-              player2: { id: "8", name: "Deltagare 8", winner: true, points: 7 },
-            },
-            {
-              player1: { id: "10", name: "Deltagare 10", winner: false, points: 4 },
-              player2: { id: "12", name: "Deltagare 12", winner: true, points: 6 },
-            },
-            {
-              player1: { id: "10", name: "Deltagare 10", winner: false, points: 10 },
-              player2: { id: "12", name: "Deltagare 12", winner: true, points: 15 },
-            }
-          ]
-        },  
-        {
-          //second game
-          stage:"Semifinal",
-          games: [
-            {
-              player1: { id: "2", name: "Deltagare 2", winner: false, points: 1 },
-              player2: { id: "4", name: "Deltagare 4", winner: true, points: 12 },
-            },
-            {
-              player1: { id: "5", name: "Deltagare 5", winner: false, points: 82 },
-              player2: { id: "8", name: "Deltagare 8", winner: true, points: 2 },
-            }
-          ]
-        },
-        {
-          stage:"Finals",
-          games: [
-            //last game
-            {
-              player1: { id: "1", name: "väntar spelare", winner: null },
-              player2: { id: "1", name: "väntar spelare", winner: null },
-            }
-          ]
+        "player2": {
+          "id": "39",
+          "name": "Team 13",
+          "points": 2,
+          "winner": false
         }
-        
-      ]
+      },
+      {
+        "player1": {
+          "id": "28",
+          "name": "Team 2",
+          "points": 15,
+          "winner": true
+        },
+        "player2": {
+          "id": "34",
+          "name": "Team 8",
+          "points": 6,
+          "winner": false
+        }
+      }
+    ]
+  },
+  {
+    "stage": "Quarterfinal",
+    "games": [
+      {
+        "player1": {
+          "id": "27",
+          "name": "Team 1",
+          "points": 15,
+          "winner": true
+        },
+        "player2": {
+          "id": "28",
+          "name": "Team 2",
+          "points": 10,
+          "winner": false
+        }
+      },
+      {
+        "player1": {
+          "id": "37",
+          "name": "Team 11",
+          "points": 15,
+          "winner": true
+        },
+        "player2": {
+          "id": "40",
+          "name": "Team 14",
+          "points": 10,
+          "winner": false
+        }
+      },
+      {
+        "player1": {
+          "id": "30",
+          "name": "Team 4",
+          "points": 15,
+          "winner": true
+        },
+        "player2": {
+          "id": "29",
+          "name": "Team 3",
+          "points": 10,
+          "winner": false
+        }
+      },
+      {
+        "player1": {
+          "id": "32",
+          "name": "Team 6",
+          "points": 15,
+          "winner": true
+        },
+        "player2": {
+          "id": "35",
+          "name": "Team 9",
+          "points": 10,
+          "winner": false
+        }
+      }
+    ]
+  },
+  {
+    "stage": "Semifinal",
+    "games": [
+      {
+        "player1": {
+          "id": "27",
+          "name": "Team 1",
+          "points": 15,
+          "winner": true
+        },
+        "player2": {
+          "id": "37",
+          "name": "Team 11",
+          "points": 10,
+          "winner": false
+        }
+      },
+      {
+        "player1": {
+          "id": "30",
+          "name": "Team 4",
+          "points": 15,
+          "winner": true
+        },
+        "player2": {
+          "id": "32",
+          "name": "Team 6",
+          "points": 10,
+          "winner": false
+        }
+      }
+    ]
+  },
+  {
+    "stage": "Final",
+    "games": [
+      {
+        "player1": {
+          "id": "27",
+          "name": "Team 1",
+          "points": 15,
+          "winner": true
+        },
+        "player2": {
+          "id": "30",
+          "name": "Team 4",
+          "points": 10,
+          "winner": false
+        }
+      }
+    ]
+  }
+]
     };
   },
   computed: {
@@ -151,14 +237,14 @@ document.addEventListener("DOMContentLoaded", function() {
 
 <template>
   <div>
-    <!-- Display the tournament bracket -->
+    <!-- visa brackets -->
     <div class="stage-names">
       <div v-for="(round, index) in formattedRounds" :key="index" class="stage-name">
         {{ round.stage }}
       </div>
     </div>
     <vue-tournament-bracket :rounds="formattedRounds">
-      <!-- Template for displaying players and dropdowns -->
+      <!-- visa vad som är i dropdown -->
       <template v-slot:player="{ player }">
         <div class="popup-trigger" @click.stop="toggleDropdown(player)">
           <span :class="getPlayerClass(player)">
@@ -171,7 +257,6 @@ document.addEventListener("DOMContentLoaded", function() {
       </template>
     </vue-tournament-bracket>
 
-    <!-- Other elements -->
     <div class="phone-container">
       <img class="phone-img" src="https://cdn-icons-png.freepik.com/512/68/68737.png" alt="turn the phone">
     </div>
@@ -292,8 +377,6 @@ document.addEventListener("DOMContentLoaded", function() {
   padding: 10px; 
   box-sizing: border-box; 
 }
-
-
 
 
 .vtb-item-players .not-started {
