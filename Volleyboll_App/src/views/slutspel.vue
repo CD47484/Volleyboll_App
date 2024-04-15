@@ -203,22 +203,22 @@ document.addEventListener("DOMContentLoaded", function() {
 
 .stage-name:nth-child(1) {
   top: 90px;
-  left: 70px;
+  left: 150px;
 }
 
 .stage-name:nth-child(2) {
   top: 90px;
-  left: 255px;
+  left: 335px;
 }
 
 .stage-name:nth-child(3) {
   top: 90px;
-  left: 460px;
+  left: 540px;
 }
 
 .stage-name:nth-child(4) {
   top: 90px;
-  left: 680px;
+  left: 760px;
 }
 
 
@@ -281,14 +281,13 @@ document.addEventListener("DOMContentLoaded", function() {
 }
 .vtb-wrapper {
   position: absolute; 
-  top: 20% !important;
+  top: 100px !important;
   bottom:30%!important;
-  left:10%;
+  left:110px;
   display: flex !important;
   flex-wrap: wrap;
   justify-content: center;
   align-items: center;
-  max-width: 100%;
   padding: 10px; 
   box-sizing: border-box; 
 }
