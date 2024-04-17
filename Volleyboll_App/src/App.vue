@@ -25,20 +25,28 @@ export default {
 
 <template>
   <nav id="nav">
+    <div v-if="slutspel">
       <img class="volleyimg" src="./assets/volleybollnobg.png">
-    <div class="gold">
-      <img class="goldimg" src="@/assets/gold.png">
-      <div class="goldteam">IT21</div>
+    
+      <div class="gold">
+        <img class="goldimg" src="@/assets/gold.png">
+        <div class="goldteam">IT21</div>
+      </div>
+      <div class="silver">
+        <img class="silverimg" src="@/assets/silver.png">
+        <div class="silverteam">IT22</div>
+      </div>
+      <div class="bronze">
+        <img class="bronzeimg" src="@/assets/bronze.png">
+        <div class="bronzeteam">MERK 40</div>
+      </div>
+      <button class="hamburger" @click="Nav_burgur"></button>   
     </div>
-    <div class="silver">
-      <img class="silverimg" src="@/assets/silver.png">
-      <div class="silverteam">IT22</div>
+    <div v-if="gruppspel">
+      <img class="volleyimg" src="./assets/volleybollnobg.png">
+      
+    <button class="hamburger" @click="Nav_burgur"></button>  
     </div>
-    <div class="bronze">
-      <img class="bronzeimg" src="@/assets/bronze.png">
-      <div class="bronzeteam">MERK 40</div>
-    </div>
-    <button class="hamburger" @click="Nav_burgur"></button>   
   </nav>
 
   <main id="main">
