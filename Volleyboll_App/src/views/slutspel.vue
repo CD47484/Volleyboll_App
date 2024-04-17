@@ -71,24 +71,26 @@ export default {
       }
     },
     advanceWinner() {
-      // Find the game in the "Play-in" stage
-      const playInGame = this.rounds.find(round => round.stage === "Play-in").games[0];
-      if (playInGame) {
-        // Determine the winner based on points
-        const winner = playInGame.player1.points > playInGame.player2.points ? playInGame.player1 : playInGame.player2;
-        // Move the winner to the next stage
-        const nextStageIndex = this.rounds.findIndex(round => round.stage !== "Play-in");
-        if (nextStageIndex !== -1) {
-          this.rounds[nextStageIndex].games[0].player1 = winner;
-          this.rounds[nextStageIndex].games[0].player2 = {
-            id: "",
-            name: "TBD",
-            points: null,
-            winner: false
-          };
-        }
-      }
+  // Find the game in the "Play-in" stage
+  const playInGame = this.rounds.find(round => round.stage === "Play-in").games[0];
+  if (playInGame) {
+    const winner = playInGame.player1.points > playInGame.player2.points ? playInGame.player1 : playInGame.player2;
+    const nextStageIndex = this.rounds.findIndex(round => round.stage !== "Play-in");
+    if (nextStageIndex !== -1) {
+      this.rounds[nextStageIndex].games[0].player1 = {
+        ...winner,
+        points: null 
+      };
+      this.rounds[nextStageIndex].games[0].player2 = {
+        id: "",
+        name: "TBD",
+        points: null,
+        winner: false
+      };
     }
+  }
+}
+
   },
   mounted() {
     document.addEventListener("click", this.closeDropdownsOnClickOutside);
