@@ -96,11 +96,7 @@ export default {
 
 
 <template>
-  <nav id="nav">
-    <button class="hamburger" @click="Nav_burgur"></button>   
-  </nav>
-
-  <main id="main">
+  
     <div class="search-container">
       <input type="text" class="search-input" placeholder="Search..">
       <button class="search-btn" @click="search">
@@ -117,7 +113,7 @@ export default {
       <button @click="toggleVisibility(index)" class="group-container" v-if="groupData.length > 0">
         <h3 class="Grupper">Grupp {{ index + 1 }}</h3>
         <p class="lag">IT21, IT23, IT22, IT24</p>
-        <img class="pil" src="./assets/pngwing2.png" alt="dropdown-pil">
+        <img class="pil" src="../assets/pngwing2.png" alt="dropdown-pil">
       </button>
       <div v-if="isVisible[index]" class="group-dropdown">
         <table :id="'group' + (index + 1)">
@@ -160,33 +156,10 @@ export default {
       <div id="nasta_match">Hello, testing new match information.</div>
     </div>
 
-  </main>
 </template>
 
 
 <style scoped>
-#nav {
-  position: absolute;
-  display: flex;
-  left: 0%;
-  right: 0%;
-  top: 0%;
-  height: 10%;
-  align-items: center;
-  background-color: darkgreen;
-}
-#main {
-  position: absolute;
-  top: 10%;
-  bottom: 0%;
-  left: 0%;
-  right: 0%;
-  height: fit-content;
-  min-height: 90%;
-  background-image: url(./assets/Bakgrundsbild.png);
-  background-repeat: no-repeat;
-  background-size: cover;
-}
 .Grupper{
   position: relative;
   color: black;
