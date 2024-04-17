@@ -11,68 +11,7 @@ export default {
   data() {
     return {
        // Data om turneringen för spelare/lag i bracketsen
-      rounds: [
-        { 
-          stage:"Play-in",
-          games: [
-            //last game
-            {
-              // Datan inom bracketsen
-              player1: { id: "2", name: "Deltagare 2", winner: true, points: 10  },
-              player2: { id: "4", name: "Deltagare 4", winner: false, points: 1  },
-            },
-
-          ]
-        },
-        {
-          stage:"Quarterfinal",
-          games: [
-            //fist game
-            {
-              // Datan inom bracketsen
-              player1: { id: "2", name: "Deltagare 2", winner: true, points: 3 },
-              player2: { id: "4", name: "Deltagare 4", winner: false, points: 14 },
-            },
-            {
-              player1: { id: "5", name: "Deltagare 5 24", winner: false, points: 9 },
-              player2: { id: "8", name: "Deltagare 8", winner: true, points: 7 },
-            },
-            {
-              player1: { id: "10", name: "Deltagare 10", winner: false, points: 4 },
-              player2: { id: "12", name: "Deltagare 12", winner: true, points: 6 },
-            },
-            {
-              player1: { id: "10", name: "Deltagare 10", winner: false, points: 10 },
-              player2: { id: "12", name: "Deltagare 12", winner: true, points: 15 },
-            }
-          ]
-        },  
-        {
-          //second game
-          stage:"Semifinal",
-          games: [
-            {
-              player1: { id: "2", name: "Deltagare 2", winner: false, points: 1 },
-              player2: { id: "4", name: "Deltagare 4", winner: true, points: 12 },
-            },
-            {
-              player1: { id: "5", name: "Deltagare 5", winner: false, points: 82 },
-              player2: { id: "8", name: "Deltagare 8", winner: true, points: 2 },
-            }
-          ]
-        },
-        {
-          stage:" The finals",
-          games: [
-            //last game
-            {
-              player1: { id: "1", name: "väntar spelare", winner: null },
-              player2: { id: "1", name: "väntar spelare", winner: null },
-            }
-          ]
-        }
-        
-      ]
+      rounds: [], // Initialize rounds as an empty array
     };
   },
   computed: {
@@ -133,32 +72,35 @@ export default {
   },
   mounted() {
     document.addEventListener("click", this.closeDropdownsOnClickOutside);
+
+    // Make an HTTP GET request to fetch the data
+    fetch('https://volleyboll-dev-quiet-mountain-3664.fly.dev/end_match/bracket/?tournament_name=test')
+      .then(response => response.json()) // Parse the JSON response
+      .then(data => {
+        // Set the fetched data to the rounds variable
+        this.rounds = data;
+      })
+      .catch(error => {
+        console.error('Error fetching data:', error);
+      });
   },
   beforeDestroy() {
     document.removeEventListener("click", this.closeDropdownsOnClickOutside);
   }
 }
-document.addEventListener("DOMContentLoaded", function() {
-    const plusImg = document.querySelector('.plus-img');
-    const box = document.querySelector('.box');
-
-    plusImg.addEventListener('click', function() {
-        box.style.display = (box.style.display === 'none') ? 'block' : 'none';
-    });
-});
 </script>
 
 
 <template>
   <div>
-    <!-- Display the tournament bracket -->
+    <!-- visa brackets -->
     <div class="stage-names">
       <div v-for="(round, index) in formattedRounds" :key="index" class="stage-name">
         {{ round.stage }}
       </div>
     </div>
     <vue-tournament-bracket :rounds="formattedRounds">
-      <!-- Template for displaying players and dropdowns -->
+      <!-- visa vad som är i dropdown -->
       <template v-slot:player="{ player }">
         <div class="popup-trigger" @click.stop="toggleDropdown(player)">
           <span :class="getPlayerClass(player)">
@@ -171,7 +113,6 @@ document.addEventListener("DOMContentLoaded", function() {
       </template>
     </vue-tournament-bracket>
 
-    <!-- Other elements -->
     <div class="phone-container">
       <img class="phone-img" src="https://cdn-icons-png.freepik.com/512/68/68737.png" alt="turn the phone">
     </div>
@@ -189,7 +130,6 @@ document.addEventListener("DOMContentLoaded", function() {
 
 
 
-
 <style>
 .stage-names {
   position: relative;
@@ -203,22 +143,22 @@ document.addEventListener("DOMContentLoaded", function() {
 
 .stage-name:nth-child(1) {
   top: 90px;
-  left: 50px;
+  left: 150px;
 }
 
 .stage-name:nth-child(2) {
   top: 90px;
-  left: 205px;
+  left: 335px;
 }
 
 .stage-name:nth-child(3) {
   top: 90px;
-  left: 390px;
+  left: 540px;
 }
 
 .stage-name:nth-child(4) {
   top: 90px;
-  left: 550px;
+  left: 760px;
 }
 
 
@@ -281,19 +221,16 @@ document.addEventListener("DOMContentLoaded", function() {
 }
 .vtb-wrapper {
   position: absolute; 
-  top: 20% !important;
+  top: 100px !important;
   bottom:30%!important;
-  left:2%;
+  left:110px;
   display: flex !important;
   flex-wrap: wrap;
   justify-content: center;
   align-items: center;
-  max-width: 100%;
   padding: 10px; 
   box-sizing: border-box; 
 }
-
-
 
 
 .vtb-item-players .not-started {
@@ -302,11 +239,11 @@ document.addEventListener("DOMContentLoaded", function() {
 }
 
 .vtb-item-players, .vtb-item-players .winner, .vtb-item-players .defeated, .popup-trigger {
-  width:8.1em;
+  width:10em;
 }
 
 .popup-trigger {
-  width: 6em; 
+  width: 7.5em; 
   overflow: hidden;
   white-space: nowrap;
   text-overflow: ellipsis;
