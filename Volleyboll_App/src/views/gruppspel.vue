@@ -48,7 +48,6 @@ export default {
         .then(response => response.json())
         .then(data => {
           this.tournament = data.tournament;
-          // In Vue 3, we directly set the property for reactivity.
           this.tournament.forEach((_, index) => {
             this.isVisible[index] = false;
           });
@@ -58,36 +57,30 @@ export default {
         });
     },
     toggleVisibility(index) {
-      // Directly toggle the boolean value for the index
-      if (this.isVisible.hasOwnProperty(index)) {
-        this.isVisible[index] = !this.isVisible[index];
-      } else {
-        // If it doesn't exist, Vue 3 will reactively add it.
-        this.isVisible[index] = true;
-      }
+      this.isVisible[index] = !this.isVisible[index];
     },
     showPopup(groupId) {
       const myPopup = new Popup({
-        id: `Grupp${groupId}`,
-        title: `Grupp ${groupId}`,
-        content: this.$refs[`group${groupId}Template`].innerHTML,
+        id: `Group${groupId}`,
+        title: `Group ${groupId}`,
+          content: this.$refs[`Group${groupId}Template`].innerHTML,
       });
-      myPopup.show();
+        myPopup.show();
     },
     populateTable(tableId, data) {
       this.$nextTick(() => {
-        let tableElement = document.getElementById(tableId);
-        if (!tableElement) {
-          console.error(`Table with id ${tableId} not found.`);
-          return;
-        }
-        data.forEach((rowData) => {
-          let row = tableElement.insertRow();
-          Object.values(rowData).forEach((cellData) => {
-            let cell = row.insertCell();
-            cell.textContent = cellData;
+        const tableElement = document.getElementById(tableId);
+        if (tableElement) {
+          data.forEach((rowData) => {
+            const row = tableElement.insertRow();
+            Object.values(rowData).forEach(cellData => {
+              const cell = row.insertCell();
+              cell.textContent = cellData;
+            });
           });
-        });
+        } else {
+          console.error(`Table with id ${tableId} not found.`);
+        }
       });
     }
   }
@@ -108,7 +101,6 @@ export default {
       </button>
     </div>
 
-    <!-- Dynamic group rendering based on visibility and group data -->
     <div v-for="(groupData, index) in [validGroup1Data, validGroup2Data, validGroup3Data, validGroup4Data, validGroup5Data]" :key="'group-' + index">
       <button @click="toggleVisibility(index)" class="group-container" v-if="groupData.length > 0">
         <h3 class="Grupper">Grupp {{ index + 1 }}</h3>
@@ -123,8 +115,8 @@ export default {
             <th>S</th>
             <th>V</th>
             <th>F</th>
-            <th>PS</th>
-            <th>POÄ +/-</th>
+            <th>PS  +/-</th>
+            <th>POÄ</th>
           </tr>
           <tr v-for="item in groupData" :key="item.id">
             <td>{{ item.id }}</td>
@@ -132,29 +124,27 @@ export default {
             <td>{{ item.games }}</td>
             <td>{{ item.wins }}</td>
             <td>{{ item.losses }}</td>
-            <td>{{ item.lost_points }}</td>
             <td>{{ item.points }}/{{ item.lost_points }}</td>
+            <td>{{ item.points }}</td>
           </tr>
         </table>
         <button @click="showPopup(index + 1)" class="popup-btn">Mer</button>
       </div>
     </div>
     <div v-for="i in 5" :ref="'group' + i + 'Template'" style="display: none;">
-      <div>
-        <table :id="'group' + i">
-          <tr>
-            <th>POS</th>
-            <th>LAG</th>
-            <th>S</th>
-            <th>V</th>
-            <th>F</th>
-            <th>PS</th>
-            <th>POÄ</th>
-          </tr>
-        </table>
-      </div>
-      <div id="nasta_match">Hello, testing new match information.</div>
-    </div>
+    <table :id="'group' + i">
+      <tr>
+        <th>POS</th>
+        <th>LAG</th>
+        <th>S</th>
+        <th>V</th>
+        <th>F</th>
+        <th>PS</th>
+        <th>POÄ</th>
+      </tr>
+    </table>
+    <div id="nasta_match">Hello, testing new match information.</div>
+  </div>
 
 </template>
 
