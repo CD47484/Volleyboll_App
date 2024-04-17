@@ -43,6 +43,13 @@ export default {
     this.fetchTournamentData();
   },
   methods: {
+    getTeamNamesForGroup(groupIndex) {
+      const group = this.tournament[0]?.groups[groupIndex];
+      if (group && group.teams) {
+        return group.teams.map(team => team.name).join(', ');
+      }
+      return 'No teams';
+    },
     fetchTournamentData() {
       fetch('https://volleyboll-dev-quiet-mountain-3664.fly.dev/tournament/info/?tournament_name=test2')
         .then(response => response.json())
@@ -111,7 +118,7 @@ export default {
     <div v-for="(groupData, index) in [validGroup1Data, validGroup2Data, validGroup3Data, validGroup4Data, validGroup5Data]" :key="'group-' + index">
       <button @click="toggleVisibility(index)" class="group-container" v-if="groupData.length > 0">
         <h3 class="Grupper">Grupp {{ index + 1 }}</h3>
-        <p class="lag">IT21, IT23, IT22, IT24</p>
+        <p class="lag">{{ getTeamNamesForGroup(index) }}</p>
         <img class="pil" src="../assets/pngwing2.png" alt="dropdown-pil">
       </button>
       <div v-if="isVisible[index]" class="group-dropdown">
