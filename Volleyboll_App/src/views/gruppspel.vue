@@ -60,12 +60,19 @@ export default {
       this.isVisible[index] = !this.isVisible[index];
     },
     showPopup(groupId) {
-      const myPopup = new Popup({
-        id: `Group${groupId}`,
-        title: `Group ${groupId}`,
-          content: this.$refs[`Group${groupId}Template`].innerHTML,
+      this.$nextTick(() => {
+        const contentRef = this.$refs[`group${groupId}Template`];
+        if (contentRef) {
+          const myPopup = new Popup({
+            id: `Group${groupId}`,
+            title: `Group ${groupId}`,
+            content: contentRef.innerHTML,
+          });
+          myPopup.show();
+        } else {
+          console.error(`Content for group ${groupId} is not available.`);
+        }
       });
-        myPopup.show();
     },
     populateTable(tableId, data) {
       this.$nextTick(() => {
