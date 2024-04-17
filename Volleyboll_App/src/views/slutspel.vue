@@ -11,154 +11,7 @@ export default {
   data() {
     return {
        // Data om turneringen för spelare/lag i bracketsen
-      rounds: [
-  {
-    "stage": "Play-in",
-    "games": [
-      {
-        "player1": {
-          "id": "27",
-          "name": "Team 1",
-          "points": 15,
-          "winner": true
-        },
-        "player2": {
-          "id": "39",
-          "name": "Team 13",
-          "points": 2,
-          "winner": false
-        }
-      },
-      {
-        "player1": {
-          "id": "28",
-          "name": "Team 2",
-          "points": 15,
-          "winner": true
-        },
-        "player2": {
-          "id": "34",
-          "name": "Team 8",
-          "points": 6,
-          "winner": false
-        }
-      }
-    ]
-  },
-  {
-    "stage": "Quarterfinal",
-    "games": [
-      {
-        "player1": {
-          "id": "27",
-          "name": "Team 1",
-          "points": 15,
-          "winner": true
-        },
-        "player2": {
-          "id": "28",
-          "name": "Team 2",
-          "points": 10,
-          "winner": false
-        }
-      },
-      {
-        "player1": {
-          "id": "37",
-          "name": "Team 11",
-          "points": 15,
-          "winner": true
-        },
-        "player2": {
-          "id": "40",
-          "name": "Team 14",
-          "points": 10,
-          "winner": false
-        }
-      },
-      {
-        "player1": {
-          "id": "30",
-          "name": "Team 4",
-          "points": 15,
-          "winner": true
-        },
-        "player2": {
-          "id": "29",
-          "name": "Team 3",
-          "points": 10,
-          "winner": false
-        }
-      },
-      {
-        "player1": {
-          "id": "32",
-          "name": "Team 6",
-          "points": 15,
-          "winner": true
-        },
-        "player2": {
-          "id": "35",
-          "name": "Team 9",
-          "points": 10,
-          "winner": false
-        }
-      }
-    ]
-  },
-  {
-    "stage": "Semifinal",
-    "games": [
-      {
-        "player1": {
-          "id": "27",
-          "name": "Team 1",
-          "points": 15,
-          "winner": true
-        },
-        "player2": {
-          "id": "37",
-          "name": "Team 11",
-          "points": 10,
-          "winner": false
-        }
-      },
-      {
-        "player1": {
-          "id": "30",
-          "name": "Team 4",
-          "points": 15,
-          "winner": true
-        },
-        "player2": {
-          "id": "32",
-          "name": "Team 6",
-          "points": 10,
-          "winner": false
-        }
-      }
-    ]
-  },
-  {
-    "stage": "Final",
-    "games": [
-      {
-        "player1": {
-          "id": "27",
-          "name": "Team 1",
-          "points": 15,
-          "winner": true
-        },
-        "player2": {
-          "id": "30",
-          "name": "Team 4",
-          "points": 10,
-          "winner": false
-        }
-      }
-    ]
-  }
-]
+      rounds: [], // Initialize rounds as an empty array
     };
   },
   computed: {
@@ -219,19 +72,22 @@ export default {
   },
   mounted() {
     document.addEventListener("click", this.closeDropdownsOnClickOutside);
+
+    // Make an HTTP GET request to fetch the data
+    fetch('https://volleyboll-dev-quiet-mountain-3664.fly.dev/end_match/bracket/?tournament_name=test')
+      .then(response => response.json()) // Parse the JSON response
+      .then(data => {
+        // Set the fetched data to the rounds variable
+        this.rounds = data;
+      })
+      .catch(error => {
+        console.error('Error fetching data:', error);
+      });
   },
   beforeDestroy() {
     document.removeEventListener("click", this.closeDropdownsOnClickOutside);
   }
 }
-document.addEventListener("DOMContentLoaded", function() {
-    const plusImg = document.querySelector('.plus-img');
-    const box = document.querySelector('.box');
-
-    plusImg.addEventListener('click', function() {
-        box.style.display = (box.style.display === 'none') ? 'block' : 'none';
-    });
-});
 </script>
 
 
@@ -271,7 +127,6 @@ document.addEventListener("DOMContentLoaded", function() {
     </div>
   </div>
 </template>
-
 
 
 
