@@ -25,7 +25,6 @@ export default {
 
 <template>
   <nav id="nav">
-    <div v-if="slutspel">
       <img class="volleyimg" src="./assets/volleybollnobg.png">
     
       <div class="gold">
@@ -41,12 +40,6 @@ export default {
         <div class="bronzeteam">MERK 40</div>
       </div>
       <button class="hamburger" @click="Nav_burgur"></button>   
-    </div>
-    <div v-if="gruppspel">
-      <img class="volleyimg" src="./assets/volleybollnobg.png">
-      
-    <button class="hamburger" @click="Nav_burgur"></button>  
-    </div>
   </nav>
 
   <main id="main">

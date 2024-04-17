@@ -96,7 +96,7 @@ export default {
 
 
 <template>
-  
+
     <div class="search-container">
       <input type="text" class="search-input" placeholder="Search..">
       <button class="search-btn" @click="search">
@@ -124,7 +124,7 @@ export default {
             <th>V</th>
             <th>F</th>
             <th>PS</th>
-            <th>POÄ</th>
+            <th>POÄ +/-</th>
           </tr>
           <tr v-for="item in groupData" :key="item.id">
             <td>{{ item.id }}</td>
