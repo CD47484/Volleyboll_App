@@ -129,6 +129,7 @@ top:20px;
   height: 43px;
   background-color: transparent;
   border:none;
+  right:5px;
 }
 .volleyimg {
   position:absolute;
