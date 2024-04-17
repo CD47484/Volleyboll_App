@@ -15,15 +15,16 @@ export default {
     };
   },
   computed: {
-    formattedRounds() {
-      return this.rounds.map(round => {
-        return {
-          stage: round.stage,
-          games: round.games
-        };
-      });
-    }
-  },
+  formattedRounds() {
+    const filteredRounds = this.rounds.filter(round => round.games.length > 0);
+    return filteredRounds.map(round => {
+      return {
+        stage: round.stage,
+        games: round.games
+      };
+    });
+  }
+},
   methods: {
     getPlayerClass(player){
     },
@@ -73,11 +74,9 @@ export default {
   mounted() {
     document.addEventListener("click", this.closeDropdownsOnClickOutside);
 
-    // Make an HTTP GET request to fetch the data
     fetch('https://volleyboll-dev-quiet-mountain-3664.fly.dev/end_match/bracket/?tournament_name=test')
-      .then(response => response.json()) // Parse the JSON response
+      .then(response => response.json()) 
       .then(data => {
-        // Set the fetched data to the rounds variable
         this.rounds = data;
       })
       .catch(error => {
