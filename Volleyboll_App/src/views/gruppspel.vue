@@ -4,7 +4,9 @@ export default {
   data() {
     return {
       isVisible: {},
-      tournament: []
+      tournament: [],
+      activeGroupData: null,
+      activeGroupId: null,
     };
   },
   computed: {
@@ -67,19 +69,48 @@ export default {
       this.isVisible[index] = !this.isVisible[index];
     },
     showPopup(groupId) {
-      this.$nextTick(() => {
-        const contentRef = this.$refs[`group${groupId}Template`];
-        if (contentRef) {
-          const myPopup = new Popup({
-            id: `Group${groupId}`,
-            title: `Group ${groupId}`,
-            content: contentRef.innerHTML,
-          });
-          myPopup.show();
-        } else {
-          console.error(`Content for group ${groupId} is not available.`);
-        }
+      this.activeGroupId = groupId - 1;
+      const groupData = this.tournament[0]?.groups[this.activeGroupId]?.teams;
+      if (groupData) {
+        this.activeGroupData = groupData;
+        const popupContent = this.formatPopupContent(groupData);
+        const myPopup = new Popup({
+          content: popupContent,
+        });
+        myPopup.show();
+      } else {
+        console.error(`Content for group ${groupId} is not available.`);
+        this.activeGroupData = null;
+      }
+    },
+    formatPopupContent(groupData) {
+      let htmlContent = '<table>';
+      htmlContent += `
+        <tr>
+          <th>POS</th>
+          <th>LAG</th>
+          <th>S</th>
+          <th>V</th>
+          <th>F</th>
+          <th>PS +/-</th>
+          <th>POÄ</th>
+        </tr>
+      `;
+      groupData.forEach(item => {
+        htmlContent += `
+          <tr>
+            <td>${item.id}</td>
+            <td>${item.name}</td>
+            <td>${item.games}</td>
+            <td>${item.wins}</td>
+            <td>${item.losses}</td>
+            <td>${item.points}/${item.lost_points}</td>
+            <td>${item.points}</td>
+          </tr>
+        `;
       });
+      htmlContent += '</table>';
+      return htmlContent;
     },
     populateTable(tableId, data) {
       this.$nextTick(() => {
@@ -145,16 +176,25 @@ export default {
         <button @click="showPopup(index + 1)" class="popup-btn">Mer</button>
       </div>
     </div>
-    <div v-for="i in 5" :ref="'group' + i + 'Template'" style="display: none;">
-    <table :id="'group' + i">
+    <div v-if="activeGroupData" class="popup">
+      <table :id="'group' + activeGroupId">
       <tr>
         <th>POS</th>
         <th>LAG</th>
         <th>S</th>
         <th>V</th>
         <th>F</th>
-        <th>PS</th>
+        <th>PS +/-</th>
         <th>POÄ</th>
+      </tr>
+      <tr v-for="(item, index) in activeGroupData" :key="index">
+        <td>{{ item.id }}</td>
+        <td>{{ item.name }}</td>
+        <td>{{ item.games }}</td>
+        <td>{{ item.wins }}</td>
+        <td>{{ item.losses }}</td>
+        <td>{{ item.points }}/{{ item.lost_points }}</td>
+        <td>{{ item.points }}</td>
       </tr>
     </table>
     <div id="nasta_match">Hello, testing new match information.</div>
@@ -172,7 +212,6 @@ export default {
   font-size: 20px;
   left: 40%;
   top: 0.6em;
-  width: fit-content;
 }
 .lag{
   position: relative;
