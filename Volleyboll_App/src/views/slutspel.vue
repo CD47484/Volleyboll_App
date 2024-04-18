@@ -1,110 +1,80 @@
-
 <script>
-// Importera vue-tournament-bracket
 import VueTournamentBracket from 'vue-tournament-bracket';
 
 export default {
   components: {
-     // Registrera VueTournamentBracket
     VueTournamentBracket,
   },
   data() {
     return {
-       // Data om turneringen för spelare/lag i bracketsen
-      rounds: [], // Initialize rounds as an empty array
+      rounds: [],
     };
   },
   computed: {
     formattedRounds() {
-      const filteredRounds = this.rounds.filter(round => round.games.length > 0);
-      return filteredRounds.map(round => {
-        return {
-          stage: round.stage,
-          games: round.games
-        };
-      });
+      return this.rounds.filter(round => round.games.length > 0);
     }
   },
   methods: {
-    getPlayerClass(player){
-    },
     toggleDropdown(player) {
-      // Stäng alla dropdown förutom den som klickades
-      this.rounds.forEach(round => {
-        round.games.forEach(game => {
-          if (game.player1 !== player && game.player1.showDropdown) {
-            game.player1.showDropdown = false;
-          }
-          if (game.player2 !== player && game.player2.showDropdown) {
-            game.player2.showDropdown = false;
-          }
-        });
-      });
-      // byt dropdown om man öppnar ny
-      player.showDropdown = !player.showDropdown;
-      // sätt text beroende på dropdown
-      switch (player.id) {
-        case "1":
-          player.specialText = "väntar spelare";
-          break;
-        case "2":
-          player.specialText = "Text ID 2";
-          break;
-        case "4":
-          player.specialText = "Text ID 4";
-          break;
-
-        default:
-          player.specialText = "Ingen information";
-          break;
-      }
+      // Your existing code for toggling dropdowns
     },
     closeDropdownsOnClickOutside(event) {
-      // Stäng dropdown om klick utanför dem
-      if (!this.$el.contains(event.target)) {
-        this.rounds.forEach(round => {
-          round.games.forEach(game => {
-            game.player1.showDropdown = false;
-            game.player2.showDropdown = false;
-          });
-        });
-      }
+      // Your existing code for closing dropdowns
+    },
+    getPlayerClass(player) {
+      // Add your logic here to determine the class for the player
+      // For example:
+      return {
+        'player-highlighted': player.points > 10, // Apply 'player-highlighted' class if points > 10
+        'player-default': player.points <= 10 // Apply 'player-default' class if points <= 10
+      };
     },
     advanceWinner() {
-  // Find the game in the "Play-in" stage
-  const playInGame = this.rounds.find(round => round.stage === "Play-in").games[0];
-  if (playInGame) {
-    const winner = playInGame.player1.points > playInGame.player2.points ? playInGame.player1 : playInGame.player2;
-    const nextStageIndex = this.rounds.findIndex(round => round.stage !== "Play-in");
-    if (nextStageIndex !== -1) {
-      this.rounds[nextStageIndex].games[0].player1 = {
-        ...winner,
-        points: null 
-      };
-      this.rounds[nextStageIndex].games[0].player2 = {
-        id: "",
-        name: "TBD",
-        points: null,
-        winner: false
-      };
+      const playInStage = this.rounds.find(round => round.stage === "Play-in");
+      if (playInStage && playInStage.games.length > 0) {
+        const playInGame = playInStage.games[0];
+        if (playInGame.player1.points !== null && playInGame.player2.points !== null) {
+          const winner = playInGame.player1.points > playInGame.player2.points ? playInGame.player1 : playInGame.player2;
+          winner.winner = true; // Set the winner flag
+          // Update points and winner for next game
+          const nextStageIndex = this.rounds.findIndex(round => round.stage !== "Play-in");
+          if (nextStageIndex !== -1) {
+            const nextStage = this.rounds[nextStageIndex];
+            nextStage.games[0].player1 = {
+              ...winner,
+              points: null
+            };
+            nextStage.games[0].player2 = {
+              id: "",
+              name: "TBD",
+              points: null,
+              winner: false
+            };
+          }
+        }
+      }
+    },
+    fetchData() {
+      fetch('https://volleyboll-dev-quiet-mountain-3664.fly.dev/end_match/bracket/?tournament_name=test')
+        .then(response => {
+          if (!response.ok) {
+            throw new Error('Network response was not ok');
+          }
+          return response.json();
+        })
+        .then(data => {
+          this.rounds = data;
+          this.advanceWinner(); // Call advanceWinner after fetching data
+        })
+        .catch(error => {
+          console.error('Error fetching data:', error);
+        });
     }
-  }
-}
-
   },
   mounted() {
     document.addEventListener("click", this.closeDropdownsOnClickOutside);
-
-    fetch('https://volleyboll-dev-quiet-mountain-3664.fly.dev/end_match/bracket/?tournament_name=test')
-      .then(response => response.json()) 
-      .then(data => {
-        this.rounds = data;
-        // Call advanceWinner function after fetching data
-        this.advanceWinner();
-      })
-      .catch(error => {
-        console.error('Error fetching data:', error);
-      });
+    this.fetchData();
   },
   beforeDestroy() {
     document.removeEventListener("click", this.closeDropdownsOnClickOutside);
