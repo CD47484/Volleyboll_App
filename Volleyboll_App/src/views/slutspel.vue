@@ -15,16 +15,16 @@ export default {
     };
   },
   computed: {
-  formattedRounds() {
-    const filteredRounds = this.rounds.filter(round => round.games.length > 0);
-    return filteredRounds.map(round => {
-      return {
-        stage: round.stage,
-        games: round.games
-      };
-    });
-  }
-},
+    formattedRounds() {
+      const filteredRounds = this.rounds.filter(round => round.games.length > 0);
+      return filteredRounds.map(round => {
+        return {
+          stage: round.stage,
+          games: round.games
+        };
+      });
+    }
+  },
   methods: {
     getPlayerClass(player){
     },
@@ -42,6 +42,8 @@ export default {
       });
       // byt dropdown om man öppnar ny
       player.showDropdown = !player.showDropdown;
+
+      
       // sätt text beroende på dropdown
       switch (player.id) {
         case "1":
@@ -69,7 +71,28 @@ export default {
           });
         });
       }
+    },
+    advanceWinner() {
+  // Find the game in the "Play-in" stage
+  const playInGame = this.rounds.find(round => round.stage === "Play-in").games[0];
+  if (playInGame) {
+    const winner = playInGame.player1.points > playInGame.player2.points ? playInGame.player1 : playInGame.player2;
+    const nextStageIndex = this.rounds.findIndex(round => round.stage !== "Play-in");
+    if (nextStageIndex !== -1) {
+      this.rounds[nextStageIndex].games[0].player1 = {
+        ...winner,
+        points: null 
+      };
+      this.rounds[nextStageIndex].games[0].player2 = {
+        id: "",
+        name: "TBD",
+        points: null,
+        winner: false
+      };
     }
+  }
+}
+
   },
   mounted() {
     document.addEventListener("click", this.closeDropdownsOnClickOutside);
@@ -78,6 +101,7 @@ export default {
       .then(response => response.json()) 
       .then(data => {
         this.rounds = data;
+        this.advanceWinner();
       })
       .catch(error => {
         console.error('Error fetching data:', error);
