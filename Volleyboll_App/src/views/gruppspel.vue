@@ -7,6 +7,7 @@ export default {
       tournament: [],
       activeGroupData: null,
       activeGroupId: null,
+      searchQuery: '',
     };
   },
   computed: {
@@ -39,24 +40,56 @@ export default {
     },
     validGroup5Data() {
       return this.group5Data.filter(item => item);
-    }
+    },
+    filteredGroups() {
+      let groups = this.tournament[0] ? this.sortTeamsByPoints(this.tournament[0].groups) : [];
+      if (!this.searchQuery) {
+        return groups;
+      }
+      return groups.filter(group => {
+        return group.teams.some(team => 
+          team.name.toLowerCase().includes(this.searchQuery.toLowerCase())
+        );
+      });
+    },
   },
   mounted() {
     this.fetchTournamentData();
   },
   methods: {
     getTeamNamesForGroup(groupIndex) {
-      const group = this.tournament[0]?.groups[groupIndex];
+      const group = this.filteredGroups[groupIndex]; 
       if (group && group.teams) {
         return group.teams.map(team => team.name).join(', ');
       }
       return 'No teams';
     },
+    sortTeamsByPoints(groups) {
+      if (!groups || !Array.isArray(groups)) {
+        console.error('Invalid or undefined groups data', groups);
+        return [];
+      }
+
+      return groups.map(group => {
+        const sortedTeams = [...group.teams].sort((a, b) => b.points - a.points);
+        sortedTeams.forEach((team, index) => {
+          team.position = index + 1;
+        });
+        return { ...group, teams: sortedTeams };
+      });
+    },
+
+    search() {
+      
+    },
     fetchTournamentData() {
-      fetch('https://volleyboll-dev-quiet-mountain-3664.fly.dev/tournament/info/?tournament_name=test2')
+      fetch('https://volleyboll-dev-quiet-mountain-3664.fly.dev/tournament/info/?tournament_name=test')
         .then(response => response.json())
         .then(data => {
           this.tournament = data.tournament;
+          if (this.tournament.length > 0 && this.tournament[0].groups) {
+            const sortedGroups = this.sortTeamsByPoints(this.tournament[0].groups);
+          }
           this.tournament.forEach((_, index) => {
             this.isVisible[index] = false;
           });
@@ -75,6 +108,8 @@ export default {
         this.activeGroupData = groupData;
         const popupContent = this.formatPopupContent(groupData);
         const myPopup = new Popup({
+          id: `Grupp${groupId}`,
+          title: `Grupp ${groupId}`,
           content: popupContent,
         });
         myPopup.show();
@@ -87,19 +122,19 @@ export default {
       let htmlContent = '<table>';
       htmlContent += `
         <tr>
-          <th>POS</th>
-          <th>LAG</th>
-          <th>S</th>
-          <th>V</th>
-          <th>F</th>
-          <th>PS +/-</th>
-          <th>POÄ</th>
+          <th> POS </th>
+          <th> LAG </th>
+          <th> S </th>
+          <th> V </th>
+          <th> F </th>
+          <th> PS +/- </th>
+          <th> POÄ </th>
         </tr>
       `;
       groupData.forEach(item => {
         htmlContent += `
           <tr>
-            <td>${item.id}</td>
+            <td>${item.position}</td>
             <td>${item.name}</td>
             <td>${item.games}</td>
             <td>${item.wins}</td>
@@ -136,7 +171,7 @@ export default {
 <template>
 
     <div class="search-container">
-      <input type="text" class="search-input" placeholder="Search..">
+      <input type="text" class="search-input" placeholder="Search" v-model="searchQuery">
       <button class="search-btn" @click="search">
         <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" stroke-width="1.5" stroke="#2c3e50" fill="none" stroke-linecap="round" stroke-linejoin="round">
           <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
@@ -146,8 +181,8 @@ export default {
       </button>
     </div>
 
-    <div v-for="(groupData, index) in [validGroup1Data, validGroup2Data, validGroup3Data, validGroup4Data, validGroup5Data]" :key="'group-' + index">
-      <button @click="toggleVisibility(index)" class="group-container" v-if="groupData.length > 0">
+    <div v-for="(group, index) in filteredGroups" :key="group.name">
+      <button @click="toggleVisibility(index)" class="group-container" v-if="group.teams.length > 0">
         <h3 class="Grupper">Grupp {{ index + 1 }}</h3>
         <p class="lag">{{ getTeamNamesForGroup(index) }}</p>
         <img class="pil" src="../assets/pngwing2.png" alt="dropdown-pil">
@@ -163,8 +198,8 @@ export default {
             <th>PS  +/-</th>
             <th>POÄ</th>
           </tr>
-          <tr v-for="item in groupData" :key="item.id">
-            <td>{{ item.id }}</td>
+          <tr v-for="item in group.teams" :key="item.id">
+            <td>{{ item.position }}</td>
             <td>{{ item.name }}</td>
             <td>{{ item.games }}</td>
             <td>{{ item.wins }}</td>
