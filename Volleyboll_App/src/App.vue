@@ -63,40 +63,40 @@ export default {
 
 .goldteam{
   position:absolute;
-left: 95px;
-top:25px;
+left: 78px;
 color:white;
+top: 25px;
 }
 
 .goldimg{
 position:absolute;
-left:60px;
+left:49px;
 top:20px;
 }
 
 .silverteam{
   position:absolute;
-left:185px;
+left:167px;
 top:25px;
 color:white;
 }
 
 .silverimg{
 position:absolute;
-left:150px;
+left:136px;
 top:20px;
 }
 
 .bronzeteam{
   position: absolute;
-left:275px;
+left:248px;
 top:25px;
 color:white;
 }
 
 .bronzeimg{
 position:absolute;
-left:240px;
+left:221px;
 top:20px;
 }
 

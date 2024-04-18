@@ -216,11 +216,9 @@ export default {
 .lag{
   position: relative;
   color: black;
-  text-align: left;
-  left: 20%;
+  text-align: center;
   top: 1em;
   font-size: 17px;
-  width: fit-content;
 }
 .group-container {
   position: relative;
@@ -249,7 +247,7 @@ export default {
   width: 40px;
   height: 30px;
   left: 39%;
-  bottom: 0.8em;
+  bottom: 1.95em;
   font-size: 23px;
 }
 .hamburger{
