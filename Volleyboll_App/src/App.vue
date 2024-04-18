@@ -60,46 +60,20 @@ export default {
 </template>
 
 <style scoped>
-
-.goldteam{
-  position:absolute;
-left: 78px;
-color:white;
-top: 25px;
+.gold, .silver, .bronze{
+  position: relative;
+  text-align: center;
+  color: white;
 }
-
-.goldimg{
-position:absolute;
-left:49px;
-top:20px;
+.gold{
+  left: 20%;
 }
-
-.silverteam{
-  position:absolute;
-left:167px;
-top:25px;
-color:white;
+.silver{
+  left: 30%;
 }
-
-.silverimg{
-position:absolute;
-left:136px;
-top:20px;
+.bronze{
+  left: 40%;
 }
-
-.bronzeteam{
-  position: absolute;
-left:248px;
-top:25px;
-color:white;
-}
-
-.bronzeimg{
-position:absolute;
-left:221px;
-top:20px;
-}
-
 #nav {
   position: absolute;
   display: flex;
