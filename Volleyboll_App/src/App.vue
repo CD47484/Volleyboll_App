@@ -25,6 +25,10 @@ export default {
 </script>
 
 <template>
+  <div v-if="adminapp" style="display: none;">
+
+  </div>
+  <div v-if="slutspel , gruppspel">
   <nav id="nav">
       <img class="volleyimg" src="./assets/volleybollnobg.png">
     
@@ -46,7 +50,8 @@ export default {
       
       <button class="hamburger" @click="Nav_burgur"></button>   
   </nav>
-
+  </div>
+  
   <main id="main">
     <div ref="Olika_view" style="display: none;">
       <div>

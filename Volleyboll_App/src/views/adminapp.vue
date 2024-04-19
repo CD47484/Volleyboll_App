@@ -423,6 +423,7 @@ function deleteUser() {
 </template>
 
 <style scoped>
+@import '@/assets/admin.css';
 main {
   position: absolute;
   left: 0;
