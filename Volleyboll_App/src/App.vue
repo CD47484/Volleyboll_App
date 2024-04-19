@@ -2,6 +2,7 @@
 import { RouterLink, RouterView } from 'vue-router'
 import gruppspel from './views/gruppspel.vue';
 import slutspel from './views/slutspel.vue';
+import adminapp from './views/adminapp.vue'; 
 
 export default {
   data() {
@@ -41,6 +42,7 @@ export default {
       </div>
       <RouterLink to="/gruppspel">gruppspel</RouterLink>
       <RouterLink to="/slutspel">slutspel</RouterLink>
+      <RouterLink to="/adminapp">admin</RouterLink>
       
       <button class="hamburger" @click="Nav_burgur"></button>   
   </nav>
