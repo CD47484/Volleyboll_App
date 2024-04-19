@@ -18,10 +18,9 @@ export default {
   },
   methods: {
     getPlayerClass(player) {
-      // Add logic here if needed
     },
     toggleDropdown(player) {
-      // Close all dropdowns except the clicked one
+      // stäng alla dropdowns utan den som man nyss ha höppnat
       this.rounds.forEach(round => {
         round.games.forEach(game => {
           if (game.player1 !== player && game.player1.showDropdown) {
@@ -32,10 +31,10 @@ export default {
           }
         });
       });
-      // Toggle dropdown for the clicked player
+      // öppna dropdown om man klcikar på en spelare
       player.showDropdown = !player.showDropdown;
 
-      // Set text depending on the dropdown
+      // text för dropdown
       switch (player.id) {
         case "1":
           player.specialText = "Waiting for player";
@@ -52,7 +51,7 @@ export default {
       }
     },
     closeDropdownsOnClickOutside(event) {
-      // Close dropdowns if click is outside them
+      // stäng dropdows om man klickar utan för dem
       if (!this.$el.contains(event.target)) {
         this.rounds.forEach(round => {
           round.games.forEach(game => {
@@ -63,24 +62,22 @@ export default {
       }
     },
     advanceWinner() {
-  // Iterate over each round
   this.rounds.forEach(round => {
-    // Check if the stage is not "Play-in"
     if (round.stage !== "Play-in") {
       round.games.forEach(game => {
         const player1Points = game.player1.points;
         const player2Points = game.player2.points;
 
-        // Check if both players have scored points
+        // kolla om spelarna ha fått poäng
         if (player1Points !== null && player2Points !== null) {
-          // Check if player 1 has more points than player 2
+          // kolla vem som har menst poäng
           if (player1Points > player2Points) {
             game.player1.winner = true;
           } else if (player1Points < player2Points) {
             game.player2.winner = true;
           }
 
-          // Move the winner to the next stage
+          // flytta vinnaren vidare till nästa runda
           const nextStageIndex = this.rounds.findIndex(nextRound => nextRound.stage === round.stage + 1);
           if (nextStageIndex !== -1 && nextStageIndex < this.rounds.length) {
             const nextStage = this.rounds[nextStageIndex];
