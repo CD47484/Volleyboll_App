@@ -4,7 +4,6 @@ export default {
   data() {
     return {
       isVisible: {},
-      plusVisible: false,
       tournament: [],
       activeGroupData: null,
       activeGroupId: null,
@@ -102,9 +101,6 @@ export default {
     toggleVisibility(index) {
       this.isVisible[index] = !this.isVisible[index];
     },
-    togglePlusVisibility() {
-      this.plusVisible = !this.plusVisible; 
-    },
     showPopup(groupId) {
       this.activeGroupId = groupId - 1;
       const groupData = this.tournament[0]?.groups[this.activeGroupId]?.teams;
@@ -169,6 +165,14 @@ export default {
     }
   }
 }
+document.addEventListener("DOMContentLoaded", function() {
+    const plusImg = document.querySelector('.plus-img');
+    const box = document.querySelector('.box');
+
+    plusImg.addEventListener('click', function() {
+        box.style.display = (box.style.display === 'none') ? 'block' : 'none';
+    });
+});
 </script>
 
 
@@ -240,11 +244,9 @@ export default {
   </div>
 
   <div class="plus">
-    <button @click="togglePlusVisibility">
       <img class="plus-img" src="../assets/plus.png">
-    </button>
   </div>
-  <div v-if="plusVisible" class="box">
+  <div class="box">
     <p class="boxtext">S: Spelade</p>
     <p class="boxtext">V: Vunna</p>
     <p class="boxtext">F: Förlorade</p>
