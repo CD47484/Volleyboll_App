@@ -117,6 +117,14 @@ export default {
     document.removeEventListener("click", this.closeDropdownsOnClickOutside);
   }
 }
+document.addEventListener("DOMContentLoaded", function() {
+    const plusImg = document.querySelector('.plus-img');
+    const box = document.querySelector('.box');
+
+    plusImg.addEventListener('click', function() {
+        box.style.display = (box.style.display === 'none') ? 'block' : 'none';
+    });
+});
 </script>
 
 <template>
