@@ -4,6 +4,7 @@ export default {
   data() {
     return {
       isVisible: {},
+      plusVisible: false,
       tournament: [],
       activeGroupData: null,
       activeGroupId: null,
@@ -100,6 +101,9 @@ export default {
     },
     toggleVisibility(index) {
       this.isVisible[index] = !this.isVisible[index];
+    },
+    togglePlusVisibility() {
+      this.plusVisible = !this.plusVisible; 
     },
     showPopup(groupId) {
       this.activeGroupId = groupId - 1;
@@ -235,10 +239,44 @@ export default {
     <div id="nasta_match">Hello, testing new match information.</div>
   </div>
 
+  <div class="plus">
+    <button @click="togglePlusVisibility">
+      <img class="plus-img" src="../assets/plus.png">
+    </button>
+  </div>
+  <div v-if="plusVisible" class="box">
+    <p class="boxtext">S: Spelade</p>
+    <p class="boxtext">V: Vunna</p>
+    <p class="boxtext">F: Förlorade</p>
+    <p class="boxtext">PS: Poängskillnad</p>
+  </div>
+
 </template>
 
 
 <style scoped>
+.plus{
+  position:fixed!important;
+  bottom:5px;
+  right:5px;
+  height:48px;
+  width:48px;
+}
+
+.box {
+  position:fixed!important;
+  border: solid black;
+  border-radius:30px;
+  text-align: center;
+  bottom:20px;
+  right:50px;
+  display:none;
+}
+
+.boxtext {
+  font-size:1.2em;
+  padding:3%;
+}
 .Grupper{
   position: relative;
   color: black;
