@@ -28,7 +28,6 @@ table {
     z-index: 99999;
     font-weight: 400;
     pointer-events: none;
-    opacity: 0;
     transition-property: opacity;
 }
 

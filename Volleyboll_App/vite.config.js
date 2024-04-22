@@ -13,5 +13,5 @@ export default defineConfig({
       '@': fileURLToPath(new URL('./src', import.meta.url))
     }
   },
-  base:'/~47491/Volleyboll/'
+  base:'/~47484/Volleyboll'
 })

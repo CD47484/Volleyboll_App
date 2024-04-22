@@ -372,7 +372,6 @@ document.addEventListener("DOMContentLoaded", function() {
   left: 35%; 
   width: 30%; 
   border-radius: 7px;
-  /* Add more styles as needed */
 }
 
 #nasta_match {
