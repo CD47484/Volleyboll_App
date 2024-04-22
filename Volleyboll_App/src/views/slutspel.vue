@@ -18,10 +18,9 @@ export default {
   },
   methods: {
     getPlayerClass(player) {
-      // Add logic here if needed
     },
     toggleDropdown(player) {
-      // Close all dropdowns except the clicked one
+      // stäng alla dropdowns utan den som man nyss ha höppnat
       this.rounds.forEach(round => {
         round.games.forEach(game => {
           if (game.player1 !== player && game.player1.showDropdown) {
@@ -32,10 +31,10 @@ export default {
           }
         });
       });
-      // Toggle dropdown for the clicked player
+      // öppna dropdown om man klcikar på en spelare
       player.showDropdown = !player.showDropdown;
 
-      // Set text depending on the dropdown
+      // text för dropdown
       switch (player.id) {
         case "1":
           player.specialText = "Waiting for player";
@@ -52,7 +51,7 @@ export default {
       }
     },
     closeDropdownsOnClickOutside(event) {
-      // Close dropdowns if click is outside them
+      // stäng dropdows om man klickar utan för dem
       if (!this.$el.contains(event.target)) {
         this.rounds.forEach(round => {
           round.games.forEach(game => {
@@ -63,24 +62,22 @@ export default {
       }
     },
     advanceWinner() {
-  // Iterate over each round
   this.rounds.forEach(round => {
-    // Check if the stage is not "Play-in"
     if (round.stage !== "Play-in") {
       round.games.forEach(game => {
         const player1Points = game.player1.points;
         const player2Points = game.player2.points;
 
-        // Check if both players have scored points
+        // kolla om spelarna ha fått poäng
         if (player1Points !== null && player2Points !== null) {
-          // Check if player 1 has more points than player 2
+          // kolla vem som har menst poäng
           if (player1Points > player2Points) {
             game.player1.winner = true;
           } else if (player1Points < player2Points) {
             game.player2.winner = true;
           }
 
-          // Move the winner to the next stage
+          // flytta vinnaren vidare till nästa runda
           const nextStageIndex = this.rounds.findIndex(nextRound => nextRound.stage === round.stage + 1);
           if (nextStageIndex !== -1 && nextStageIndex < this.rounds.length) {
             const nextStage = this.rounds[nextStageIndex];
@@ -120,10 +117,19 @@ export default {
     document.removeEventListener("click", this.closeDropdownsOnClickOutside);
   }
 }
+//Öppnar och stänger plus popup
+document.addEventListener("DOMContentLoaded", function() {
+    const plusImg = document.querySelector('.plus-img');
+    const box = document.querySelector('.box');
+
+    plusImg.addEventListener('click', function() {
+        box.style.display = (box.style.display === 'none') ? 'block' : 'none';
+    });
+});
 </script>
 
 <template>
-  <div>
+  <div class="container">
     <!-- visa brackets -->
     <div class="stage-names">
       <div v-for="(round, index) in formattedRounds" :key="index" class="stage-name">
@@ -144,9 +150,7 @@ export default {
       </template>
     </vue-tournament-bracket>
 
-    <div class="phone-container">
-      <img class="phone-img" src="https://cdn-icons-png.freepik.com/512/68/68737.png" alt="turn the phone">
-    </div>
+    
 
     <div class="plus">
       <img class="plus-img" src="../assets/plus.png">
@@ -157,6 +161,9 @@ export default {
       <p class="boxtext">Price: Pizza</p>
     </div>
   </div>
+  <div class="phone-container">
+      <img class="phone-img" src="https://cdn-icons-png.freepik.com/512/68/68737.png" alt="turn the phone">
+    </div>
 </template>
 
 
@@ -303,6 +310,7 @@ export default {
     left: 50%;
     transform: translate(-50%, -50%);
     z-index: 150; 
+
   }
   .phone-container {
     position: fixed;
@@ -310,12 +318,19 @@ export default {
     left: 0;
     width: 100%;
     height: 100%;
-    background-color: rgb(0, 128, 0); 
+    background-color: rgba(0, 128, 0, 0); 
     z-index: 100; 
     display: flex;
     justify-content: center;
     align-items: center;
     z-index: 149;
+  }
+  .container{
+    filter:blur(8px);
+    
+  }
+  .nav{
+    filter:blur(8px);
   }
 }
 

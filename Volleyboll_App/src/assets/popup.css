@@ -1,6 +1,23 @@
 @import url(https://fonts.googleapis.com/css?family=Inter:400,600,800);
 @import './base.css';
 
+table {
+    width: 100%;
+    border-collapse: collapse; 
+    margin-bottom: 10px;
+  }
+  
+  th, tr {
+    border-bottom: 1px solid black;
+  }
+  
+  th:last-child, td:last-child, tr:last-child {
+    border-right: none;
+  }
+  td {
+    text-align: center;
+  }
+
 .popup {
     position: fixed;
     top: 0;
