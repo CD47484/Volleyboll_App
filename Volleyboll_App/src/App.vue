@@ -66,6 +66,22 @@ export default {
   color: white;
 }
 .gold{
+  left: 8%;
+}
+.silver{
+  left: -5%;
+}
+.bronze{
+  left: -19%;
+}
+
+@media only screen and (max-width: 500px) {
+ .gold, .silver, .bronze{
+  position: relative;
+  text-align: center;
+  color: white;
+}
+.gold{
   left: 20%;
 }
 .silver{
@@ -73,6 +89,23 @@ export default {
 }
 .bronze{
   left: 40%;
+}
+}
+@media only screen and (max-width: 1224px) {
+ .gold, .silver, .bronze{
+  position: relative;
+  text-align: center;
+  color: white;
+}
+.gold{
+  left: 6%;
+}
+.silver{
+  left: -5%;
+}
+.bronze{
+  left: -17%;
+}
 }
 #nav {
   position: absolute;
