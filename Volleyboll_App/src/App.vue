@@ -2,7 +2,6 @@
 import { RouterLink, RouterView } from 'vue-router'
 import gruppspel from './views/gruppspel.vue';
 import slutspel from './views/slutspel.vue';
-import adminapp from './views/adminapp.vue'; 
 
 export default {
   data() {
@@ -20,20 +19,12 @@ export default {
       myPopup4.show();
     },
   },
-  computed: {
-    // Check if the current route is adminapp
-    isAdminApp() {
-      return this.$route.name === 'adminapp';
-    }
-  }
 };
 
 </script>
 
 <template>
-  <div>
-    <!-- Only show the navigation if not on adminapp route -->
-    <div v-if="!isAdminApp" id="nav">
+  <nav id="nav">
       <img class="volleyimg" src="./assets/volleybollnobg.png">
     
       <div class="gold">
@@ -50,28 +41,42 @@ export default {
       </div>
       <RouterLink to="/gruppspel">gruppspel</RouterLink>
       <RouterLink to="/slutspel">slutspel</RouterLink>
-      <RouterLink to="/adminapp">admin</RouterLink>
       
       <button class="hamburger" @click="Nav_burgur"></button>   
-    </div>
-  
-    <main id="main">
-      <div ref="Olika_view" style="display: none;">
-        <div>
-          <RouterLink to="/gruppspel">gruppspel</RouterLink>
-        </div>
-        <div>
-          <RouterLink to="/slutspel">slutspel</RouterLink>
-        </div>
+  </nav>
+
+  <main id="main">
+    <div ref="Olika_view" style="display: none;">
+      <div>
+        <RouterLink to="/gruppspel">gruppspel</RouterLink>
       </div>
-  
-      <RouterView />
+      <div>
+        <RouterLink to="/slutspel">slutspel</RouterLink>
+      </div>
+    </div>
+
+    <RouterView />
     </main>
-  </div>
 </template>
 
 <style scoped>
 .gold, .silver, .bronze{
+  position: relative;
+  text-align: center;
+  color: white;
+}
+.gold{
+  left: 8%;
+}
+.silver{
+  left: -5%;
+}
+.bronze{
+  left: -19%;
+}
+
+@media only screen and (max-width: 500px) {
+ .gold, .silver, .bronze{
   position: relative;
   text-align: center;
   color: white;
@@ -84,6 +89,23 @@ export default {
 }
 .bronze{
   left: 40%;
+}
+}
+@media only screen and (max-width: 1224px) {
+ .gold, .silver, .bronze{
+  position: relative;
+  text-align: center;
+  color: white;
+}
+.gold{
+  left: 6%;
+}
+.silver{
+  left: -5%;
+}
+.bronze{
+  left: -17%;
+}
 }
 #nav {
   position: absolute;

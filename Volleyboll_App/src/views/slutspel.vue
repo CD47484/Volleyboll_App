@@ -117,6 +117,7 @@ export default {
     document.removeEventListener("click", this.closeDropdownsOnClickOutside);
   }
 }
+//Öppnar och stänger plus popup
 document.addEventListener("DOMContentLoaded", function() {
     const plusImg = document.querySelector('.plus-img');
     const box = document.querySelector('.box');
@@ -128,7 +129,7 @@ document.addEventListener("DOMContentLoaded", function() {
 </script>
 
 <template>
-  <div>
+  <div class="container">
     <!-- visa brackets -->
     <div class="stage-names">
       <div v-for="(round, index) in formattedRounds" :key="index" class="stage-name">
@@ -149,9 +150,7 @@ document.addEventListener("DOMContentLoaded", function() {
       </template>
     </vue-tournament-bracket>
 
-    <div class="phone-container">
-      <img class="phone-img" src="https://cdn-icons-png.freepik.com/512/68/68737.png" alt="turn the phone">
-    </div>
+    
 
     <div class="plus">
       <img class="plus-img" src="../assets/plus.png">
@@ -162,6 +161,9 @@ document.addEventListener("DOMContentLoaded", function() {
       <p class="boxtext">Price: Pizza</p>
     </div>
   </div>
+  <div class="phone-container">
+      <img class="phone-img" src="https://cdn-icons-png.freepik.com/512/68/68737.png" alt="turn the phone">
+    </div>
 </template>
 
 
@@ -308,6 +310,7 @@ document.addEventListener("DOMContentLoaded", function() {
     left: 50%;
     transform: translate(-50%, -50%);
     z-index: 150; 
+
   }
   .phone-container {
     position: fixed;
@@ -315,12 +318,19 @@ document.addEventListener("DOMContentLoaded", function() {
     left: 0;
     width: 100%;
     height: 100%;
-    background-color: rgb(0, 128, 0); 
+    background-color: rgba(0, 128, 0, 0); 
     z-index: 100; 
     display: flex;
     justify-content: center;
     align-items: center;
     z-index: 149;
+  }
+  .container{
+    filter:blur(8px);
+    
+  }
+  .nav{
+    filter:blur(8px);
   }
 }
 
