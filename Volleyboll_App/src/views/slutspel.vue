@@ -17,6 +17,14 @@ export default {
     }
   },
   methods: {
+    info() {
+      const myPopup5 = new Popup({
+        id: "Burger",
+        title: "WOW",
+        content: this.$refs.MerInfo.innerHTML,
+      });
+      myPopup5.show();
+    },
     getPlayerClass(player) {
     },
     toggleDropdown(player) {
@@ -117,15 +125,6 @@ export default {
     document.removeEventListener("click", this.closeDropdownsOnClickOutside);
   }
 }
-//Öppnar och stänger plus popup
-document.addEventListener("DOMContentLoaded", function() {
-    const plusImg = document.querySelector('.plus-img');
-    const box = document.querySelector('.box');
-
-    plusImg.addEventListener('click', function() {
-        box.style.display = (box.style.display === 'none') ? 'block' : 'none';
-    });
-});
 </script>
 
 <template>
@@ -152,13 +151,13 @@ document.addEventListener("DOMContentLoaded", function() {
 
     
 
-    <div class="plus">
-      <img class="plus-img" src="../assets/plus.png">
-    </div>
-    <div class="box">
-      <p class="boxtext">Most points: IT21</p>
-      <p class="boxtext">Best W/L: IT21</p>
-      <p class="boxtext">Price: Pizza</p>
+    <button @click="info" class="info">
+      <img class="plus-img" src="../assets/QUESTION.png">
+    </button>
+    <div ref="MerInfo" style="display: none;">
+      <p class="boxtext">Fläst poäng: IT21</p>
+      <p class="boxtext">Bäst V/F: IT21</p>
+      <p class="boxtext">Pris: Pizza</p>
     </div>
   </div>
   <div class="phone-container">
@@ -226,12 +225,14 @@ document.addEventListener("DOMContentLoaded", function() {
   color: white; 
 }
 
-.plus{
+.info{
   position:fixed!important;
   bottom:5px;
   right:5px;
   height:48px;
   width:48px;
+  border:none;
+  background-color: transparent;
 }
 
 .box {

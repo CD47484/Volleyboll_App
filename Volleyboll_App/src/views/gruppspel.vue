@@ -57,6 +57,14 @@ export default {
     this.fetchTournamentData();
   },
   methods: {
+    info() {
+      const myPopup5 = new Popup({
+        id: "Burger",
+        title: "WOW",
+        content: this.$refs.MerInfo.innerHTML,
+      });
+      myPopup5.show();
+    },
     getTeamNamesForGroup(groupIndex) {
       const group = this.filteredGroups[groupIndex]; 
       if (group && group.teams) {
@@ -127,8 +135,7 @@ export default {
           <th> S </th>
           <th> V </th>
           <th> F </th>
-          <th> PS +/- </th>
-          <th> POÄ </th>
+          <th> PS V/F </th>
         </tr>
       `;
       groupData.forEach(item => {
@@ -165,14 +172,6 @@ export default {
     }
   }
 }
-document.addEventListener("DOMContentLoaded", function() {
-    const plusImg = document.querySelector('.plus-img');
-    const box = document.querySelector('.box');
-
-    plusImg.addEventListener('click', function() {
-        box.style.display = (box.style.display === 'none') ? 'block' : 'none';
-    });
-});
 </script>
 
 
@@ -203,8 +202,7 @@ document.addEventListener("DOMContentLoaded", function() {
             <th>S</th>
             <th>V</th>
             <th>F</th>
-            <th>PS  +/-</th>
-            <th>POÄ</th>
+            <th>PS V/F</th>
           </tr>
           <tr v-for="item in group.teams" :key="item.id">
             <td>{{ item.position }}</td>
@@ -213,7 +211,6 @@ document.addEventListener("DOMContentLoaded", function() {
             <td>{{ item.wins }}</td>
             <td>{{ item.losses }}</td>
             <td>{{ item.points }}/{{ item.lost_points }}</td>
-            <td>{{ item.points }}</td>
           </tr>
         </table>
         <button @click="showPopup(index + 1)" class="popup-btn">Mer</button>
@@ -243,21 +240,21 @@ document.addEventListener("DOMContentLoaded", function() {
     <div id="nasta_match">Hello, testing new match information.</div>
   </div>
 
-  <div class="plus">
-      <img class="plus-img" src="../assets/plus.png">
-  </div>
-  <div class="box">
-    <p class="boxtext">S: Spelade</p>
-    <p class="boxtext">V: Vunna</p>
-    <p class="boxtext">F: Förlorade</p>
-    <p class="boxtext">PS: Poängskillnad</p>
-  </div>
+  <button @click="info" class="info">
+      <img class="plus-img" src="../assets/QUESTION.png">
+    </button>
+    <div ref="MerInfo" style="display: none;">
+      <p class="boxtext">S = Spelade matcher</p>
+      <p class="boxtext">V = Vunna matcher</p>
+      <p class="boxtext">F = Förlorade matcher</p>
+      <p class="boxtext">PS V/F = Poäng skillnad, antalet vunna poäng subtraherat med antalet förlorade poäng</p>
+    </div>
 
 </template>
 
 
 <style scoped>
-.plus{
+.info{
   position:fixed!important;
   bottom:5px;
   right:5px;
