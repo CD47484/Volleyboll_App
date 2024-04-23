@@ -39,9 +39,6 @@ export default {
         <img class="bronzeimg" src="@/assets/bronze.png">
         <div class="bronzeteam">MERK 40</div>
       </div>
-      <RouterLink to="/gruppspel">gruppspel</RouterLink>
-      <RouterLink to="/slutspel">slutspel</RouterLink>
-      
       <button class="hamburger" @click="Nav_burgur"></button>   
   </nav>
 
