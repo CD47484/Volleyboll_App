@@ -191,7 +191,7 @@ document.addEventListener("DOMContentLoaded", function() {
 
     <div v-for="(group, index) in filteredGroups" :key="group.name">
       <button @click="toggleVisibility(index)" class="group-container" v-if="group.teams.length > 0">
-        <h3 class="Grupper">Grupp {{ index + 1 }}</h3>
+        <h3 class="Grupper">{{group.name}}</h3>
         <p class="lag">{{ getTeamNamesForGroup(index) }}</p>
         <img class="pil" src="../assets/pngwing2.png" alt="dropdown-pil">
       </button>

@@ -172,6 +172,8 @@ document.addEventListener("DOMContentLoaded", function() {
 
 .stage-names {
   position: relative;
+  color: white;
+  font-weight: bold;
 }
 
 .stage-name {
@@ -295,16 +297,33 @@ document.addEventListener("DOMContentLoaded", function() {
 }
 .vtb-item-players .winner {
   position: relative;
-  background-color: rgb(5, 171, 5) !important;
+  background-color: rgb(41, 184, 41) !important;
 }
 .vtb-item-players .defeated {
   position: relative;
-  background-color: red !important;
+  background-color: rgb(240, 39, 39) !important;
 }
 
 .phone-img {
   display: none;
   }
+.vtb-item-child:after, .vtb-item-child:before {
+    content: "";
+    position: absolute;
+    background-color: white !important;
+    top: 50%;
+}
+.vtb-item-parent:after {
+    position: absolute;
+    content: "";
+    width: 25px;
+    height: 2px;
+    left: 0;
+    top: 50%;
+    background-color: white !important;
+    -webkit-transform: translateX(-100%);
+    transform: translateX(-100%);
+}
 
   
 @media only screen and (max-width:450px){

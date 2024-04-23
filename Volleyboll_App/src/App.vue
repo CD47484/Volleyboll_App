@@ -63,45 +63,30 @@ export default {
   color: white;
 }
 .gold{
-  left: 8%;
-}
-.silver{
-  left: -5%;
-}
-.bronze{
-  left: -19%;
-}
-
-@media only screen and (max-width: 500px) {
- .gold, .silver, .bronze{
-  position: relative;
-  text-align: center;
-  color: white;
-}
-.gold{
   left: 20%;
 }
 .silver{
-  left: 30%;
+  left: 13%;
 }
 .bronze{
-  left: 40%;
+  left: 5%;
 }
-}
-@media only screen and (max-width: 1224px) {
+
+
+@media only screen and (min-width: 700px) {
  .gold, .silver, .bronze{
   position: relative;
   text-align: center;
   color: white;
 }
 .gold{
-  left: 6%;
+  left: 8%;
 }
 .silver{
-  left: -5%;
+  left: -15%;
 }
 .bronze{
-  left: -17%;
+  left: -38%;
 }
 }
 #nav {
