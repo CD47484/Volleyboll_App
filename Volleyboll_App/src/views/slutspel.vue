@@ -245,6 +245,7 @@ document.addEventListener("DOMContentLoaded", function() {
 .boxtext {
   font-size:1.2em;
   padding:3%;
+  color:black;
 }
 .dropdown {
   position: absolute;
@@ -254,6 +255,7 @@ document.addEventListener("DOMContentLoaded", function() {
   box-shadow: 0 8px 16px 0 rgba(0,0,0,0.2);
   padding: 12px 16px;
   z-index: 1;
+  cursor:auto;
 }
 .dropdown p {
   background-color: black !important;
