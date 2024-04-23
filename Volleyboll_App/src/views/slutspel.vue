@@ -169,6 +169,7 @@ document.addEventListener("DOMContentLoaded", function() {
 
 
 <style>
+
 .stage-names {
   position: relative;
 }
@@ -278,6 +279,10 @@ document.addEventListener("DOMContentLoaded", function() {
 
 .vtb-item-players, .vtb-item-players .winner, .vtb-item-players .defeated, .popup-trigger {
   width:10em;
+}
+
+.vtb-item-players:hover, .vtb-item-players .winner:hover, .vtb-item-players .defeated:hover, .popup-trigger:hover {
+  cursor:pointer;
 }
 
 .popup-trigger {
