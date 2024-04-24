@@ -2,6 +2,7 @@
 <script>
 import VueTournamentBracket from 'vue-tournament-bracket';
 
+//exporterar turnerings brackets
 export default {
   components: {
     VueTournamentBracket,
@@ -58,8 +59,8 @@ export default {
           break;
       }
     },
+    // stäng dropdows om man klickar utan för dem
     closeDropdownsOnClickOutside(event) {
-      // stäng dropdows om man klickar utan för dem
       if (!this.$el.contains(event.target)) {
         this.rounds.forEach(round => {
           round.games.forEach(game => {
@@ -69,21 +70,22 @@ export default {
         });
       }
     },
+    //skickar vidare vinnaren till nästa match
     advanceWinner() {
-  this.rounds.forEach(round => {
-    if (round.stage !== "Play-in") {
-      round.games.forEach(game => {
-        const player1Points = game.player1.points;
-        const player2Points = game.player2.points;
+      this.rounds.forEach(round => {
+        if (round.stage !== "Play-in") {
+          round.games.forEach(game => {
+            const player1Points = game.player1.points;
+            const player2Points = game.player2.points;
 
-        // kolla om spelarna ha fått poäng
-        if (player1Points !== null && player2Points !== null) {
-          // kolla vem som har menst poäng
-          if (player1Points > player2Points) {
-            game.player1.winner = true;
-          } else if (player1Points < player2Points) {
-            game.player2.winner = true;
-          }
+          // kolla om spelarna ha fått poäng
+          if (player1Points !== null && player2Points !== null) {
+            // kolla vem som har menst poäng
+            if (player1Points > player2Points) {
+              game.player1.winner = true;
+            } else if (player1Points < player2Points) {
+              game.player2.winner = true;
+            }
 
           // flytta vinnaren vidare till nästa runda
           const nextStageIndex = this.rounds.findIndex(nextRound => nextRound.stage === round.stage + 1);
@@ -102,9 +104,10 @@ export default {
           }
         }
       });
-    }
-  });
-},
+      }
+    });
+    },
+    //fetchar turneringen beroende på namnet
     fetchData() {
       fetch('https://volleyboll-dev-quiet-mountain-3664.fly.dev/end_match/bracket/?tournament_name=test')
         .then(response => response.json()) 
@@ -115,7 +118,7 @@ export default {
         .catch(error => {
           console.error('Error fetching data:', error);
         });
-    }
+  }
   },
   mounted() {
     document.addEventListener("click", this.closeDropdownsOnClickOutside);
@@ -247,8 +250,9 @@ export default {
 
 .boxtext {
   font-size:1.2em;
-  padding:3%;
+  padding:5px;
   color:black;
+  
 }
 .dropdown {
   position: absolute;
@@ -305,6 +309,10 @@ export default {
   background-color: rgb(240, 39, 39) !important;
 }
 
+.popup-content{
+  overflow:auto;
+}
+
 .phone-img {
   display: none;
   }
@@ -359,6 +367,15 @@ export default {
   .nav{
     filter:blur(8px);
   }
+
+}
+@media only screen and (min-height:450px){
+  .boxtext {
+  font-size:1.2em;
+  padding:4%;
+  color:black;
+  
+}
 }
 
 </style>
