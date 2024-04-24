@@ -63,13 +63,13 @@ export default {
   color: white;
 }
 .gold{
-  left: 20%;
+  left: 23%;
 }
 .silver{
-  left: 13%;
+  left: 16%;
 }
 .bronze{
-  left: 5%;
+  left: 9%;
 }
 
 
@@ -122,12 +122,13 @@ export default {
   height: 43px;
   background-color: transparent;
   border:none;
-  right:5px;
+  right:2%;
 }
 .volleyimg {
   position:absolute;
   z-index:150;
   height:3.5em;
   width:3.5em;
+  left: 2%;
 }
 </style>

@@ -147,7 +147,6 @@ export default {
             <td>${item.wins}</td>
             <td>${item.losses}</td>
             <td>${item.points}/${item.lost_points}</td>
-            <td>${item.points}</td>
           </tr>
         `;
       });
@@ -225,7 +224,6 @@ export default {
         <th>V</th>
         <th>F</th>
         <th>PS +/-</th>
-        <th>POÄ</th>
       </tr>
       <tr v-for="(item, index) in activeGroupData" :key="index">
         <td>{{ item.id }}</td>
@@ -234,7 +232,6 @@ export default {
         <td>{{ item.wins }}</td>
         <td>{{ item.losses }}</td>
         <td>{{ item.points }}/{{ item.lost_points }}</td>
-        <td>{{ item.points }}</td>
       </tr>
     </table>
     <div id="nasta_match">Hello, testing new match information.</div>
