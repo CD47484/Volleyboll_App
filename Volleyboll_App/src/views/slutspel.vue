@@ -2,6 +2,7 @@
 <script>
 import VueTournamentBracket from 'vue-tournament-bracket';
 
+//exporterar turnerings brackets
 export default {
   components: {
     VueTournamentBracket,
@@ -17,6 +18,14 @@ export default {
     }
   },
   methods: {
+    info() {
+      const myPopup5 = new Popup({
+        id: "Burger",
+        title: "WOW",
+        content: this.$refs.MerInfo.innerHTML,
+      });
+      myPopup5.show();
+    },
     getPlayerClass(player) {
     },
     toggleDropdown(player) {
@@ -50,8 +59,8 @@ export default {
           break;
       }
     },
+    // stäng dropdows om man klickar utan för dem
     closeDropdownsOnClickOutside(event) {
-      // stäng dropdows om man klickar utan för dem
       if (!this.$el.contains(event.target)) {
         this.rounds.forEach(round => {
           round.games.forEach(game => {
@@ -61,21 +70,22 @@ export default {
         });
       }
     },
+    //skickar vidare vinnaren till nästa match
     advanceWinner() {
-  this.rounds.forEach(round => {
-    if (round.stage !== "Play-in") {
-      round.games.forEach(game => {
-        const player1Points = game.player1.points;
-        const player2Points = game.player2.points;
+      this.rounds.forEach(round => {
+        if (round.stage !== "Play-in") {
+          round.games.forEach(game => {
+            const player1Points = game.player1.points;
+            const player2Points = game.player2.points;
 
-        // kolla om spelarna ha fått poäng
-        if (player1Points !== null && player2Points !== null) {
-          // kolla vem som har menst poäng
-          if (player1Points > player2Points) {
-            game.player1.winner = true;
-          } else if (player1Points < player2Points) {
-            game.player2.winner = true;
-          }
+          // kolla om spelarna ha fått poäng
+          if (player1Points !== null && player2Points !== null) {
+            // kolla vem som har menst poäng
+            if (player1Points > player2Points) {
+              game.player1.winner = true;
+            } else if (player1Points < player2Points) {
+              game.player2.winner = true;
+            }
 
           // flytta vinnaren vidare till nästa runda
           const nextStageIndex = this.rounds.findIndex(nextRound => nextRound.stage === round.stage + 1);
@@ -94,9 +104,10 @@ export default {
           }
         }
       });
-    }
-  });
-},
+      }
+    });
+    },
+    //fetchar turneringen beroende på namnet
     fetchData() {
       fetch('https://volleyboll-dev-quiet-mountain-3664.fly.dev/end_match/bracket/?tournament_name=test')
         .then(response => response.json()) 
@@ -107,7 +118,7 @@ export default {
         .catch(error => {
           console.error('Error fetching data:', error);
         });
-    }
+  }
   },
   mounted() {
     document.addEventListener("click", this.closeDropdownsOnClickOutside);
@@ -117,15 +128,6 @@ export default {
     document.removeEventListener("click", this.closeDropdownsOnClickOutside);
   }
 }
-//Öppnar och stänger plus popup
-document.addEventListener("DOMContentLoaded", function() {
-    const plusImg = document.querySelector('.plus-img');
-    const box = document.querySelector('.box');
-
-    plusImg.addEventListener('click', function() {
-        box.style.display = (box.style.display === 'none') ? 'block' : 'none';
-    });
-});
 </script>
 
 <template>
@@ -152,13 +154,13 @@ document.addEventListener("DOMContentLoaded", function() {
 
     
 
-    <div class="plus">
-      <img class="plus-img" src="../assets/plus.png">
-    </div>
-    <div class="box">
-      <p class="boxtext">Most points: IT21</p>
-      <p class="boxtext">Best W/L: IT21</p>
-      <p class="boxtext">Price: Pizza</p>
+    <button @click="info" class="info">
+      <img class="plus-img" src="../assets/QUESTION.png">
+    </button>
+    <div ref="MerInfo" style="display: none;">
+      <p class="boxtext">Fläst poäng: IT21</p>
+      <p class="boxtext">Bäst V/F: IT21</p>
+      <p class="boxtext">Pris: Pizza</p>
     </div>
   </div>
   <div class="phone-container">
@@ -172,6 +174,8 @@ document.addEventListener("DOMContentLoaded", function() {
 
 .stage-names {
   position: relative;
+  color: white;
+  font-weight: bold;
 }
 
 .stage-name {
@@ -224,12 +228,14 @@ document.addEventListener("DOMContentLoaded", function() {
   color: white; 
 }
 
-.plus{
+.info{
   position:fixed!important;
   bottom:5px;
   right:5px;
   height:48px;
   width:48px;
+  border:none;
+  background-color: transparent;
 }
 
 .box {
@@ -244,7 +250,9 @@ document.addEventListener("DOMContentLoaded", function() {
 
 .boxtext {
   font-size:1.2em;
-  padding:3%;
+  padding:5px;
+  color:black;
+  
 }
 .dropdown {
   position: absolute;
@@ -254,6 +262,7 @@ document.addEventListener("DOMContentLoaded", function() {
   box-shadow: 0 8px 16px 0 rgba(0,0,0,0.2);
   padding: 12px 16px;
   z-index: 1;
+  cursor:auto;
 }
 .dropdown p {
   background-color: black !important;
@@ -293,16 +302,37 @@ document.addEventListener("DOMContentLoaded", function() {
 }
 .vtb-item-players .winner {
   position: relative;
-  background-color: rgb(5, 171, 5) !important;
+  background-color: rgb(41, 184, 41) !important;
 }
 .vtb-item-players .defeated {
   position: relative;
-  background-color: red !important;
+  background-color: rgb(240, 39, 39) !important;
+}
+
+.popup-content{
+  overflow:auto;
 }
 
 .phone-img {
   display: none;
   }
+.vtb-item-child:after, .vtb-item-child:before {
+    content: "";
+    position: absolute;
+    background-color: white !important;
+    top: 50%;
+}
+.vtb-item-parent:after {
+    position: absolute;
+    content: "";
+    width: 25px;
+    height: 2px;
+    left: 0;
+    top: 50%;
+    background-color: white !important;
+    -webkit-transform: translateX(-100%);
+    transform: translateX(-100%);
+}
 
   
 @media only screen and (max-width:450px){
@@ -337,6 +367,15 @@ document.addEventListener("DOMContentLoaded", function() {
   .nav{
     filter:blur(8px);
   }
+
+}
+@media only screen and (min-height:450px){
+  .boxtext {
+  font-size:1.2em;
+  padding:4%;
+  color:black;
+  
+}
 }
 
 </style>

@@ -63,45 +63,30 @@ export default {
   color: white;
 }
 .gold{
+  left: 23%;
+}
+.silver{
+  left: 16%;
+}
+.bronze{
+  left: 9%;
+}
+
+
+@media only screen and (min-width: 700px) {
+ .gold, .silver, .bronze{
+  position: relative;
+  text-align: center;
+  color: white;
+}
+.gold{
   left: 8%;
 }
 .silver{
-  left: -5%;
+  left: -15%;
 }
 .bronze{
-  left: -19%;
-}
-
-@media only screen and (max-width: 500px) {
- .gold, .silver, .bronze{
-  position: relative;
-  text-align: center;
-  color: white;
-}
-.gold{
-  left: 20%;
-}
-.silver{
-  left: 30%;
-}
-.bronze{
-  left: 40%;
-}
-}
-@media only screen and (max-width: 1224px) {
- .gold, .silver, .bronze{
-  position: relative;
-  text-align: center;
-  color: white;
-}
-.gold{
-  left: 6%;
-}
-.silver{
-  left: -5%;
-}
-.bronze{
-  left: -17%;
+  left: -38%;
 }
 }
 #nav {
@@ -137,12 +122,13 @@ export default {
   height: 43px;
   background-color: transparent;
   border:none;
-  right:5px;
+  right:2%;
 }
 .volleyimg {
   position:absolute;
   z-index:150;
   height:3.5em;
   width:3.5em;
+  left: 2%;
 }
 </style>
