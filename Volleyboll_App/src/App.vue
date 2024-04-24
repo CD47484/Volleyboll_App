@@ -81,7 +81,7 @@ export default {
   height: 12%;
   min-height: 60px;
   align-items: center;
-  z-index: 1;
+  z-index: 150;
   background-color: #124076;
 }
 #main {
