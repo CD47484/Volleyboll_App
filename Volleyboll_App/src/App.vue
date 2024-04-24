@@ -50,6 +50,7 @@ export default {
       <div>
         <RouterLink to="/slutspel">slutspel</RouterLink>
       </div>
+
     </div>
 
     <RouterView />
@@ -71,24 +72,6 @@ export default {
 .bronze{
   left: 9%;
 }
-
-
-@media only screen and (min-width: 700px) {
- .gold, .silver, .bronze{
-  position: relative;
-  text-align: center;
-  color: white;
-}
-.gold{
-  left: 8%;
-}
-.silver{
-  left: -15%;
-}
-.bronze{
-  left: -38%;
-}
-}
 #nav {
   position: absolute;
   display: flex;
@@ -96,7 +79,34 @@ export default {
   left: 0%;
   right: 0%;
   top: 0%;
-  height: 10%;
+  height: 12%;
+  min-height: 60px;
+  align-items: center;
+  z-index: 150;
+  background-color: #124076;
+}
+#main {
+  position: absolute;
+  top: 12%;
+  bottom: 0%;
+  left: 0%;
+  right: 0%;
+  height: fit-content;
+  min-height: 88%;
+  overflow: auto;
+  background-image: url(./assets/Bakgrundsbild.png);
+  background-repeat: no-repeat;
+  background-size: cover;
+}
+@media only screen and (max-height: 700px) {
+  #nav {
+  position: absolute;
+  display: flex;
+  justify-content: space-between;
+  left: 0%;
+  right: 0%;
+  top: 0%;
+  height: 15%;
   min-height: 60px;
   align-items: center;
   z-index: 1;
@@ -104,16 +114,61 @@ export default {
 }
 #main {
   position: absolute;
-  top: 10%;
+  top: 15%;
   bottom: 0%;
   left: 0%;
   right: 0%;
   height: fit-content;
-  min-height: 90%;
+  min-height: 85%;
   overflow: auto;
   background-image: url(./assets/Bakgrundsbild.png);
   background-repeat: no-repeat;
   background-size: cover;
+}
+}
+  
+@media only screen and (min-width: 700px) {
+ .gold, .silver, .bronze{
+  position: relative;
+  text-align: center;
+  color: white;
+}
+.gold{
+  left: 12%;
+}
+.silver{
+  left: -8%;
+}
+.bronze{
+  left: -30%;
+}
+
+#nav {
+  position: absolute;
+  display: flex;
+  justify-content: space-between;
+  left: 0%;
+  right: 0%;
+  top: 0%;
+  height: 15%;
+  min-height: 60px;
+  align-items: center;
+  z-index: 1;
+  background-color: #124076;
+}
+#main {
+  position: absolute;
+  top: 15%;
+  bottom: 0%;
+  left: 0%;
+  right: 0%;
+  height: fit-content;
+  min-height: 85%;
+  overflow: auto;
+  background-image: url(./assets/Bakgrundsbild.png);
+  background-repeat: no-repeat;
+  background-size: cover;
+}
 }
 .hamburger{
   background-image: url(./assets/hamburger.png);
@@ -129,6 +184,6 @@ export default {
   z-index:150;
   height:3.5em;
   width:3.5em;
-  left: 2%;
+  left: 1%;
 }
 </style>

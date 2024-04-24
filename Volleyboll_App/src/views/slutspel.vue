@@ -163,6 +163,7 @@ export default {
       <p class="boxtext">Pris: Pizza</p>
     </div>
   </div>
+  
   <div class="phone-container">
       <img class="phone-img" src="https://cdn-icons-png.freepik.com/512/68/68737.png" alt="turn the phone">
     </div>
@@ -363,9 +364,6 @@ export default {
   .container{
     filter:blur(8px);
     
-  }
-  .nav{
-    filter:blur(8px);
   }
 
 }
