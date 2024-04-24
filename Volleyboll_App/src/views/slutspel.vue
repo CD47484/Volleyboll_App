@@ -372,7 +372,7 @@ export default {
 @media only screen and (min-height:450px){
   .boxtext {
   font-size:1.2em;
-  padding:5%;
+  padding:4%;
   color:black;
   
 }
