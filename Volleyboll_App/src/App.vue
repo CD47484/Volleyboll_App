@@ -50,6 +50,7 @@ export default {
       <div>
         <RouterLink to="/slutspel">slutspel</RouterLink>
       </div>
+
     </div>
 
     <RouterView />
