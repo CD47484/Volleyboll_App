@@ -3,7 +3,7 @@ import gruppspel from '../views/gruppspel.vue';
 import slutspel from '../views/slutspel.vue';
 
 const router = createRouter({
-  history: createWebHistory('/~47484/Volleyboll/'),
+  history: createWebHistory('/~47491/Volleyboll'),
   routes: [
     {
       path: '/gruppspel',

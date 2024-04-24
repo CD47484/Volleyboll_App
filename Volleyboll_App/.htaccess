@@ -1,9 +1,8 @@
 <IfModule mod_rewrite.c>
     RewriteEngine On
-    RewriteBase /~47484/Volleyboll/
+    RewriteBase /~47491/Volleyboll/
     RewriteRule ^index\.html$ - [L]
     RewriteCond %{REQUEST_FILENAME} !-f
     RewriteCond %{REQUEST_FILENAME} !-d
-    RewriteRule . /~47484/Volleyboll/ [L]
-  </IfModule>
-  
+    RewriteRule . /~47491/Volleyboll/index.html [L]
+</IfModule> 
