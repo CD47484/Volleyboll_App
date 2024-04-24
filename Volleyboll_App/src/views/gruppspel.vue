@@ -11,6 +11,10 @@ export default {
     };
   },
   computed: {
+    sortedMatches() {
+      const matches = this.tournament[0]?.groups_matches || [];
+      return matches.sort((a, b) => new Date(b.match_date) - new Date(a.match_date));
+    },
     group1Data() {
       return this.tournament[0]?.groups?.[0]?.teams || [];
     },
@@ -54,6 +58,7 @@ export default {
     },
   },
   mounted() {
+    console.log("Component mounted!");
     this.fetchTournamentData();
   },
   methods: {
@@ -83,12 +88,15 @@ export default {
       
     },
     fetchTournamentData() {
+      console.log("Fetching data...");
       fetch('https://volleyboll-dev-quiet-mountain-3664.fly.dev/tournament/info/?tournament_name=test')
         .then(response => response.json())
         .then(data => {
           this.tournament = data.tournament;
-          if (this.tournament.length > 0 && this.tournament[0].groups) {
-            const sortedGroups = this.sortTeamsByPoints(this.tournament[0].groups);
+          if (this.tournament.length > 0 && this.tournament[0].groups_matches) {
+            this.tournament[0].groups_matches = this.tournament[0].groups_matches.sort((a, b) => {
+              return new Date(a.match_date) - new Date(b.match_date);
+            });
           }
           this.tournament.forEach((_, index) => {
             this.isVisible[index] = false;
@@ -103,20 +111,18 @@ export default {
     },
     showPopup(groupId) {
       this.activeGroupId = groupId - 1;
-      const groupData = this.tournament[0]?.groups[this.activeGroupId]?.teams;
-      if (groupData) {
-        this.activeGroupData = groupData;
-        const popupContent = this.formatPopupContent(groupData);
-        const myPopup = new Popup({
-          id: `Grupp${groupId}`,
-          title: `Grupp ${groupId}`,
-          content: popupContent,
-        });
-        myPopup.show();
-      } else {
-        console.error(`Content for group ${groupId} is not available.`);
-        this.activeGroupData = null;
-      }
+      
+      const groupData = this.tournament[0]?.groups?.[groupId - 1]?.teams || [];
+      const matches = this.tournament[0]?.groups_matches?.filter(match => match.group_id === groupId) || [];
+      const popupContent = this.formatPopupContent(groupData);
+      const popupMatchContent = this.formatPopupContentForMatches(matches);
+      const combinedContent = popupContent + popupMatchContent;
+      const myPopup = new Popup({
+        id: `Grupp${groupId}`,
+        title: `Grupp ${groupId}`,
+        content: combinedContent,
+      });
+      myPopup.show();
     },
     formatPopupContent(groupData) {
       let htmlContent = '<table>';
@@ -147,6 +153,34 @@ export default {
       htmlContent += '</table>';
       return htmlContent;
     },
+    formatPopupContentForMatches(groups_matches) {
+      console.log("Matches Data for Popup:", groups_matches); // Check the entire matches array
+      let htmlContent = '<h2>Matcher</h2><table>';
+      htmlContent += `
+        <tr>
+          <th>Match</th>
+          <th>Poäng</th>
+          <th>Status</th>
+        </tr>
+      `;
+
+      groups_matches.forEach(match => { // Correctly iterate over each match
+          const rowClass = match.is_completed === 1 ? 'done' : (match.active === 1 ? 'active' : 'ongoing');
+          console.log("Row Class for match ID " + match.id + ":", rowClass); // Check the computed class for each match
+          htmlContent += `
+              <tr class="${rowClass}">
+                <td>${match.team1_name} vs ${match.team2_name}</td>
+                <td>${match.team1_points || '0'}/${match.team2_points || '0'}</td>
+                <td>
+                  ${match.is_completed ? 'Completed' : (match.active ? 'Active' : 'Ongoing')}
+                </td>
+              </tr>
+          `;
+      });
+
+      htmlContent += '</table>';
+      return htmlContent;
+    },
     populateTable(tableId, data) {
       this.$nextTick(() => {
         const tableElement = document.getElementById(tableId);
@@ -165,14 +199,7 @@ export default {
     }
   }
 }
-document.addEventListener("DOMContentLoaded", function() {
-    const plusImg = document.querySelector('.plus-img');
-    const box = document.querySelector('.box');
 
-    plusImg.addEventListener('click', function() {
-        box.style.display = (box.style.display === 'none') ? 'block' : 'none';
-    });
-});
 </script>
 
 
@@ -219,29 +246,6 @@ document.addEventListener("DOMContentLoaded", function() {
         <button @click="showPopup(index + 1)" class="popup-btn">Mer</button>
       </div>
     </div>
-    <div v-if="activeGroupData" class="popup">
-      <table :id="'group' + activeGroupId">
-      <tr>
-        <th>POS</th>
-        <th>LAG</th>
-        <th>S</th>
-        <th>V</th>
-        <th>F</th>
-        <th>PS +/-</th>
-        <th>POÄ</th>
-      </tr>
-      <tr v-for="(item, index) in activeGroupData" :key="index">
-        <td>{{ item.id }}</td>
-        <td>{{ item.name }}</td>
-        <td>{{ item.games }}</td>
-        <td>{{ item.wins }}</td>
-        <td>{{ item.losses }}</td>
-        <td>{{ item.points }}/{{ item.lost_points }}</td>
-        <td>{{ item.points }}</td>
-      </tr>
-    </table>
-    <div id="nasta_match">Hello, testing new match information.</div>
-  </div>
 
   <div class="plus">
       <img class="plus-img" src="../assets/plus.png">
