@@ -163,6 +163,7 @@ export default {
       <p class="boxtext">Pris: Pizza</p>
     </div>
   </div>
+  
   <div class="phone-container">
       <img class="phone-img" src="https://cdn-icons-png.freepik.com/512/68/68737.png" alt="turn the phone">
     </div>
@@ -250,8 +251,9 @@ export default {
 
 .boxtext {
   font-size:1.2em;
-  padding:3%;
+  padding:5px;
   color:black;
+  
 }
 .dropdown {
   position: absolute;
@@ -308,6 +310,10 @@ export default {
   background-color: rgb(240, 39, 39) !important;
 }
 
+.popup-content{
+  overflow:auto;
+}
+
 .phone-img {
   display: none;
   }
@@ -359,9 +365,15 @@ export default {
     filter:blur(8px);
     
   }
-  .nav{
-    filter:blur(8px);
-  }
+
+}
+@media only screen and (min-height:450px){
+  .boxtext {
+  font-size:1.2em;
+  padding:4%;
+  color:black;
+  
+}
 }
 
 </style>
