@@ -130,7 +130,11 @@ export default {
 }
 </script>
 
+
 <template>
+
+
+
   <div class="container">
     <!-- visa brackets -->
     <div class="stage-names">
@@ -172,6 +176,11 @@ export default {
 
 
 <style>
+
+
+
+
+
 
 .stage-names {
   position: relative;

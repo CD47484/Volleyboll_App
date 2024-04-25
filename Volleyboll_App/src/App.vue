@@ -57,7 +57,7 @@ export default {
     </main>
 </template>
 
-<style scoped>
+<style>
 .gold, .silver, .bronze{
   position: relative;
   text-align: center;
