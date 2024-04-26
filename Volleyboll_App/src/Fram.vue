@@ -82,7 +82,7 @@ export default {
   background-repeat: no-repeat;
   background-size: cover;
 }
-@media only screen and (max-height: 700px) {
+@media only screen and (max-width: 600px) {
   #nav {
   position: absolute;
   display: flex;
@@ -95,6 +95,11 @@ export default {
   align-items: center;
   z-index: 1;
   background-color: #124076;
+}
+#medals {
+  display: flex;
+  justify-content: center;
+  flex-grow: 1;
 }
 #main {
   position: absolute;
@@ -118,7 +123,6 @@ export default {
   color: white;
   min-width: 3rem;
 }
-
 #nav {
   position: absolute;
   display: flex;
