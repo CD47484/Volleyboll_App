@@ -1,26 +1,10 @@
 <script>
-import { RouterLink, RouterView } from 'vue-router'
-import gruppspel from './views/gruppspel.vue';
-import slutspel from './views/slutspel.vue';
+import Nav from '@/components/nav.js'; 
 
 export default {
-  data() {
-    return {
-      activeTab: 'home',
-    };
-  },
-  methods: {
-    Nav_burgur() {
-      const myPopup4 = new Popup({
-        id: "Burger",
-        title: "WOW",
-        content: this.$refs.Olika_view.innerHTML,
-      });
-      myPopup4.show();
-    },
-  },
-};
+  mixins: [Nav], 
 
+};
 </script>
 
 <template>
