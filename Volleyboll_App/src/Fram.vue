@@ -44,6 +44,7 @@ export default {
 </template>
 
 <style scoped>
+
 .gold, .silver, .bronze{
   position: relative;
   text-align: center;
@@ -156,6 +157,18 @@ export default {
   background-size: cover;
 }
 }
+
+@media only screen and (max-height:550px){
+  .goldteam, .silverteam, .bronzeteam{
+  
+  font-size:15px;
+}
+.goldimg, .silverimg, .bronzeimg{
+  width:24px;
+  height:32px;
+}
+}
+
 .hamburger{
   background-image: url(./assets/hamburger.png);
   position: relative;

@@ -120,17 +120,28 @@ export default {
     showPopup(groupId) {
       this.activeGroupId = groupId - 1;
       
-      const groupData = this.tournament[0]?.groups?.[groupId - 1]?.teams || [];
-      const matches = this.tournament[0]?.groups_matches?.filter(match => match.group_id === groupId) || [];
-      const popupContent = this.formatPopupContent(groupData);
-      const popupMatchContent = this.formatPopupContentForMatches(matches);
-      const combinedContent = popupContent + popupMatchContent;
-      const myPopup = new Popup({
-        id: `Grupp${groupId}`,
-        title: `Grupp ${groupId}`,
-        content: combinedContent,
-      });
-      myPopup.show();
+      const groupData = this.tournament[0]?.groups?.[this.activeGroupId]?.teams || [];
+      const groupTeamIds = new Set(groupData.map(team => team.id)); // Create a set of team IDs
+
+      fetch(`https://volleyboll-dev-quiet-mountain-3664.fly.dev/group_match/info/?tournament_name=test&group_id=${groupId}&rollback_before_commit=false`)
+        .then(response => response.json())
+        .then(data => {
+          const matches = data.groups_matches || [];
+          const filteredMatches = matches.filter(match => groupTeamIds.has(match.team1_id) && groupTeamIds.has(match.team2_id));
+          const popupContent = this.formatPopupContent(groupData);
+          const popupMatchContent = this.formatPopupContentForMatches(filteredMatches, groupTeamIds); // Pass the set of IDs
+          const combinedContent = popupContent + popupMatchContent;
+          
+          const myPopup = new Popup({
+            id: `Grupp${groupId}`,
+            title: `Grupp ${groupId}`,
+            content: combinedContent,
+          });
+          myPopup.show();
+        })
+        .catch(error => {
+          console.error('Error fetching group matches:', error);
+        });
     },
     formatPopupContent(groupData) {
       let htmlContent = '<table>';
@@ -159,7 +170,7 @@ export default {
       htmlContent += '</table>';
       return htmlContent;
     },
-    formatPopupContentForMatches(groups_matches) {
+    formatPopupContentForMatches(groups_matches, groupTeamIds) {
       console.log("Matches Data for Popup:", groups_matches); // Check the entire matches array
       let htmlContent = '<h2>Matcher</h2><table>';
       htmlContent += `
@@ -170,18 +181,19 @@ export default {
         </tr>
       `;
 
-      groups_matches.forEach(match => { // Correctly iterate over each match
-          const rowClass = match.is_completed === 1 ? 'done' : (match.active === 1 ? 'active' : 'ongoing');
-          console.log("Row Class for match ID " + match.id + ":", rowClass); // Check the computed class for each match
+      groups_matches.forEach(match => {
+        if (groupTeamIds.has(match.team1_id) && groupTeamIds.has(match.team2_id)) { // Filter matches here
+          const rowClass = match.is_completed === 1 ? 'Klar' : (match.active === 1 ? 'Igång' : 'Inte spelad');
           htmlContent += `
               <tr class="${rowClass}">
                 <td>${match.team1_name} vs ${match.team2_name}</td>
                 <td>${match.team1_points || '0'}/${match.team2_points || '0'}</td>
                 <td>
-                  ${match.is_completed ? 'Completed' : (match.active ? 'Active' : 'Ongoing')}
+                  ${match.is_completed ? 'Klar' : (match.active ? 'Igång' : 'Inte spelad')}
                 </td>
               </tr>
           `;
+        }
       });
 
       htmlContent += '</table>';
