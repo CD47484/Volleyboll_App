@@ -26,7 +26,7 @@ export default {
 <template>
   <nav id="nav">
       <img class="volleyimg" src="./assets/volleybollnobg.png">
-    
+    <div id="medals">
       <div class="gold">
         <img class="goldimg" src="@/assets/gold.png">
         <div class="goldteam">IT21</div>
@@ -38,6 +38,7 @@ export default {
       <div class="bronze">
         <img class="bronzeimg" src="@/assets/bronze.png">
         <div class="bronzeteam">MERK 40</div>
+      </div>
       </div>
       <button class="hamburger" @click="Nav_burgur"></button>   
   </nav>
@@ -60,19 +61,15 @@ export default {
 </template>
 
 <style scoped>
+#medals {
+  display: flex;
+  justify-content: left;
+}
 .gold, .silver, .bronze{
   position: relative;
   text-align: center;
   color: white;
-}
-.gold{
-  left: 23%;
-}
-.silver{
-  left: 16%;
-}
-.bronze{
-  left: 9%;
+  min-width: 5rem;
 }
 #nav {
   position: absolute;
@@ -134,15 +131,7 @@ export default {
   position: relative;
   text-align: center;
   color: white;
-}
-.gold{
-  left: 12%;
-}
-.silver{
-  left: -8%;
-}
-.bronze{
-  left: -30%;
+  min-width: 3rem;
 }
 
 #nav {
@@ -174,18 +163,16 @@ export default {
 }
 .hamburger{
   background-image: url(./assets/hamburger.png);
-  position: relative;
   width: 50px;
   height: 43px;
   background-color: transparent;
   border:none;
-  right:2%;
+  margin: 0.5em;
 }
 .volleyimg {
-  position:absolute;
   z-index:150;
   height:3.5em;
   width:3.5em;
-  left: 1%;
+  margin: 0.5em;
 }
 </style>
