@@ -48,6 +48,7 @@ export default {
 #medals {
   display: flex;
   justify-content: left;
+  flex-grow: 1;
 }
 .gold, .silver, .bronze{
   position: relative;
