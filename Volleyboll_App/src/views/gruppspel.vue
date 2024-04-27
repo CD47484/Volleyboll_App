@@ -1,8 +1,13 @@
 <script>
+
+//Tournament nament till fetch
+const tournamentName = "test";
+
 export default {
   name: 'App',
   data() {
     return {
+      //Det är till alla små popup där det står grupp data 
       isVisible: {},
       tournament: [],
       activeGroupData: null,
@@ -11,40 +16,12 @@ export default {
     };
   },
   computed: {
+    //Sorterar alla matcher
     sortedMatches() {
       const matches = this.tournament[0]?.groups_matches || [];
       return matches.sort((a, b) => new Date(b.match_date) - new Date(a.match_date));
     },
-    group1Data() {
-      return this.tournament[0]?.groups?.[0]?.teams || [];
-    },
-    group2Data() {
-      return this.tournament[0]?.groups?.[1]?.teams || [];
-    },
-    group3Data() {
-      return this.tournament[0]?.groups?.[2]?.teams || [];
-    },
-    group4Data() {
-      return this.tournament[0]?.groups?.[3]?.teams || [];
-    },
-    group5Data() {
-      return this.tournament[0]?.groups?.[4]?.teams || [];
-    },
-    validGroup1Data() {
-      return this.group1Data.filter(item => item);
-    },
-    validGroup2Data() {
-      return this.group2Data.filter(item => item);
-    },
-    validGroup3Data() {
-      return this.group3Data.filter(item => item);
-    },
-    validGroup4Data() {
-      return this.group4Data.filter(item => item);
-    },
-    validGroup5Data() {
-      return this.group5Data.filter(item => item);
-    },
+    //Filtrerear grupperna till att sökningen 
     filteredGroups() {
       let groups = this.tournament[0] ? this.sortTeamsByPoints(this.tournament[0].groups) : [];
       if (!this.searchQuery) {
@@ -58,10 +35,11 @@ export default {
     },
   },
   mounted() {
-    console.log("Component mounted!");
+    //Mountar fetchningen
     this.fetchTournamentData();
   },
   methods: {
+    //Popup för info hörnet med frågeteknet 
     info() {
       const myPopup5 = new Popup({
         id: "Burger",
@@ -70,6 +48,7 @@ export default {
       });
       myPopup5.show();
     },
+    //Hämtar team namnen i grupperna
     getTeamNamesForGroup(groupIndex) {
       const group = this.filteredGroups[groupIndex]; 
       if (group && group.teams) {
@@ -77,6 +56,7 @@ export default {
       }
       return 'No teams';
     },
+    //Sorterar lagen av poängen 
     sortTeamsByPoints(groups) {
       if (!groups || !Array.isArray(groups)) {
         console.error('Invalid or undefined groups data', groups);
@@ -92,12 +72,14 @@ export default {
       });
     },
 
+    //Sök
     search() {
       
     },
+    // fetching av tournament info 
     fetchTournamentData() {
       console.log("Fetching data...");
-      fetch('https://volleyboll-dev-quiet-mountain-3664.fly.dev/tournament/info/?tournament_name=test')
+      fetch(`https://volleyboll-dev-quiet-mountain-3664.fly.dev/tournament/info/?tournament_name=${tournamentName}`)
         .then(response => response.json())
         .then(data => {
           this.tournament = data.tournament;
@@ -117,13 +99,15 @@ export default {
     toggleVisibility(index) {
       this.isVisible[index] = !this.isVisible[index];
     },
+    //Popup för grupperna med alla matcher och vilka som leder 
     showPopup(groupId) {
       this.activeGroupId = groupId - 1;
       
       const groupData = this.tournament[0]?.groups?.[this.activeGroupId]?.teams || [];
       const groupTeamIds = new Set(groupData.map(team => team.id)); // Create a set of team IDs
-
-      fetch(`https://volleyboll-dev-quiet-mountain-3664.fly.dev/group_match/info/?tournament_name=test&group_id=${groupId}&rollback_before_commit=false`)
+      
+      //Fetchar in grupp matcherna så att de kan visa vilka matcher som är klara och vilka som ska komma 
+      fetch(`https://volleyboll-dev-quiet-mountain-3664.fly.dev/group_match/info/?tournament_name=${tournamentName}&group_id=${groupId}&rollback_before_commit=false`)
         .then(response => response.json())
         .then(data => {
           const matches = data.groups_matches || [];
@@ -143,6 +127,7 @@ export default {
           console.error('Error fetching group matches:', error);
         });
     },
+    //För grupp data
     formatPopupContent(groupData) {
       let htmlContent = '<table>';
       htmlContent += `
@@ -170,6 +155,7 @@ export default {
       htmlContent += '</table>';
       return htmlContent;
     },
+    //För matcherna i grupperna
     formatPopupContentForMatches(groups_matches, groupTeamIds) {
       console.log("Matches Data for Popup:", groups_matches); // Check the entire matches array
       let htmlContent = '<h2>Matcher</h2><table>';
@@ -199,6 +185,7 @@ export default {
       htmlContent += '</table>';
       return htmlContent;
     },
+    //Sätter in data in i tabelerna
     populateTable(tableId, data) {
       this.$nextTick(() => {
         const tableElement = document.getElementById(tableId);
@@ -233,6 +220,7 @@ export default {
       </button>
     </div>
 
+    <!--Grupp data-->
     <div v-for="(group, index) in filteredGroups" :key="group.name">
       <button @click="toggleVisibility(index)" class="group-container" v-if="group.teams.length > 0">
         <h3 class="Grupper">{{group.name}}</h3>
@@ -265,6 +253,7 @@ export default {
   <button @click="info" class="info">
       <img class="plus-img" src="../assets/QUESTION.png">
     </button>
+    <!--Popup info-->
     <div ref="MerInfo" style="display: none;">
       <p class="boxtext">S = Spelade matcher</p>
       <p class="boxtext">V = Vunna matcher</p>
