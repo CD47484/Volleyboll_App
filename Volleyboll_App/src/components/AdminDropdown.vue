@@ -1,26 +1,40 @@
 <script setup>
 import { ref } from 'vue'
 
-const props = defineProps(['title', 'icon', 'items'])
+const props = defineProps(['title', 'icon', 'items', 'noadd'])
 
 const minimized = ref(true)
+const target = ref(null)
 
 function toggleMinimized() {
-  if (minimized.value) {
-    minimized.value = false
-  } else {
-    minimized.value = true
+  minimized.value = !minimized.value
+} 
+
+const targetHeight = ref(minimized.value ? '4rem' : '0px')
+requestAnimationFrame(update)
+
+function update() {
+  let tot = 0
+  if (target.value?.children) {
+    for (let child of Array.from(target.value.children)) {
+      tot += child.offsetHeight
+      const cStyle = window.getComputedStyle(child)
+      tot += parseFloat(cStyle.marginTop)
+      tot += parseFloat(cStyle.marginBottom)
+    }
   }
+  targetHeight.value = minimized.value ? '4rem' : `${tot}px`
+  requestAnimationFrame(update)
 }
 </script>
 
 <template>
-  <div id="dropdown" :style="minimized ? 'height: 4rem;' : ''">
+  <div ref="target" class="dropdown" :style="`height: ${targetHeight};`">
     <div class="dropdown-title" @click="toggleMinimized">
       <h2>{{ props.title ? props.title : 'Unnamed' }}<span>{{ props.items?.length ? ` ( ${props.items.length} )` : '' }}</span></h2>
       <div v-html="props.icon" class="dropdown-icon" />
     </div>
-    <div class="dropdown-add btn" @click="$emit('addclick')">
+    <div v-if="!props.noadd" class="dropdown-add btn" @click="$emit('addclick')">
       <svg
         xmlns="http://www.w3.org/2000/svg"
         width="1.5rem"
@@ -46,7 +60,9 @@ function toggleMinimized() {
 </template>
 
 <style scoped>
-#dropdown {
+@import '@/assets/adminview.css';
+
+.dropdown {
   width: 100%;
   background-color: hsl(0, 0%, 40%);
   text-align: center;
