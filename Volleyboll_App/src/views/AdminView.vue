@@ -55,6 +55,7 @@ function openPopup(name) {
   document.getElementById(name).style.display = null
   popupError.value = null
   popupMessage.value = null
+  console.log (document.getElementById (name))
 }
 
 function closePopup(e) {
